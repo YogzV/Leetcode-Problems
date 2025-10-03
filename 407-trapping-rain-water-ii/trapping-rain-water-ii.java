@@ -1,4 +1,6 @@
-public class cell{
+class Solution {
+
+    private static class cell{
     int height;
     int r;
     int c;
@@ -10,7 +12,7 @@ public class cell{
     }
 }
 
-class Solution {
+
     public int trapRainWater(int[][] heightMap) {
         int row = heightMap.length;
         int col = heightMap[0].length;
