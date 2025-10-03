@@ -49,12 +49,14 @@ class Solution {
            {
              x = dx[i] + obj.r;
              y = dy[i] + obj.c;
-            if(x<row && x>0 && y<col && y>0 && vis[x][y]==0)
+            if(x>=row || x<0 || y>=col || y<0 || vis[x][y]==1)
             {
+                continue;
+            } else{
                 maxWater += Math.max(0,obj.height-heightMap[x][y]);
                 pqueue.offer(new cell(Math.max(obj.height,heightMap[x][y]),x,y));
                 vis[x][y] =1;
-            } 
+            }
 
            }
 
