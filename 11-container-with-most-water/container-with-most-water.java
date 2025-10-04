@@ -16,6 +16,7 @@ class Solution {
             end--;
            }
         }
+        System.gc();
         return maxWater;
 
     }
