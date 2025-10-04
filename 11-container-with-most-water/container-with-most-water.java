@@ -6,7 +6,7 @@ class Solution {
         int maxWater = 0;
         while(start < end)
         {
-          
+            
             maxWater = Math.max(maxWater,(end-start)*Math.min(height[start],height[end]));
           
            if(height[start] < height[end])
@@ -16,7 +16,7 @@ class Solution {
             end--;
            }
         }
-        System.gc();
+      
         return maxWater;
 
     }
