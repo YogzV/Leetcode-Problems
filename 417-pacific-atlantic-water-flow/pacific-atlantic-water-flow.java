@@ -1,7 +1,7 @@
 class Solution {
     
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
-        HashMap<int[],Integer> hmap = new HashMap<>();
+        
         int m = heights.length;
         int n = heights[0].length;
         List<List<Integer>> list = new ArrayList<>();
@@ -29,7 +29,7 @@ class Solution {
         {
             if(pac[i][j] && atl[i][j])
             {
-                list.add(new ArrayList(Arrays.asList(i,j)));
+                list.add(Arrays.asList(i,j));
             }
         }
        }
@@ -37,7 +37,7 @@ class Solution {
         return list;
     }
 
-    private static void dfs(int i,int j,int[][] heights,boolean[][] vis,int value)
+    public static void dfs(int i,int j,int[][] heights,boolean[][] vis,int value)
     {
         if(i>=heights.length || i<0 || j>=heights[0].length || j<0 || vis[i][j] || heights[i][j] < value ) 
         return;
