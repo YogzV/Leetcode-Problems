@@ -33,7 +33,7 @@ class Solution {
             }
         }
        }
-
+        System.gc();
         return list;
     }
 
