@@ -2,19 +2,18 @@ class Solution {
     
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
         
-        int m = heights.length;
-        int n = heights[0].length;
+        int i,j,m = heights.length,n = heights[0].length;
+
         List<List<Integer>> list = new ArrayList<>();
 
         boolean[][] pac = new boolean[m][n];
         boolean[][] atl = new boolean[m][n];   
     
-        int i,j;
+       
         for(i=0;i<m;i++)
         {    
             dfs(i,0,heights,pac,heights[i][0]);
-            dfs(i,n-1,heights,atl,heights[i][n-1]);
-            
+            dfs(i,n-1,heights,atl,heights[i][n-1]);    
         }
 
        for(i=0;i<n;i++)
@@ -24,16 +23,10 @@ class Solution {
        }
 
        for(i=0;i<m;i++)
-       {
         for(j=0;j<n;j++)
-        {
             if(pac[i][j] && atl[i][j])
-            {
                 list.add(Arrays.asList(i,j));
-            }
-        }
-       }
-        System.gc();
+
         return list;
     }
 
