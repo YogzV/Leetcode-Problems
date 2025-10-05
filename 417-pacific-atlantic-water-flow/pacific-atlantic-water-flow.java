@@ -2,6 +2,10 @@ class Solution {
     
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
         
+         if (heights.length == 0 || heights[0].length == 0) {
+            return new ArrayList<>();
+        }
+
         int i,j,m = heights.length,n = heights[0].length;
 
         List<List<Integer>> list = new ArrayList<>();
