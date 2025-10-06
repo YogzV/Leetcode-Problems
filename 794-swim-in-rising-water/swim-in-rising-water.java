@@ -59,6 +59,7 @@ class Solution {
             }
          }
        }
+       System.gc();
        return time;
 
     }
