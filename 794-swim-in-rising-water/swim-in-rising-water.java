@@ -22,22 +22,23 @@ class Solution {
         
        PriorityQueue<Cell> pqueue = new PriorityQueue<>();
        int m = grid.length;
-       
-       
+
         boolean[][] vis = new boolean[m][m];
-        int i;
         
       int[] dx = {-1,0,1,0};
       int[] dy = {0,1,0,-1};
 
+       int time=0;
+       int r,c,x,y,i;
+
        pqueue.offer(new Cell(0,0,grid[0][0]));
        vis[0][0] = true;
-       int time=0;
+      
        while(!pqueue.isEmpty())
        {
          Cell cell = pqueue.poll();
-         int r = cell.row;
-         int c = cell.col;
+         r = cell.row;
+         c = cell.col;
          
          time = Math.max(time,grid[r][c]);
          
@@ -48,8 +49,8 @@ class Solution {
          for(i=0;i<4;i++)
          {
           
-            int x = dx[i] + r;
-            int y = dy[i] + c;
+             x = dx[i] + r;
+             y = dy[i] + c;
             
             if(x<m && x>=0 && y<m && y>=0 && !vis[x][y])
             {  
