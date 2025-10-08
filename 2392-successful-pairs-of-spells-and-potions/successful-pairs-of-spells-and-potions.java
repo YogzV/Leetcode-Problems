@@ -2,11 +2,11 @@ class Solution {
 
     private static int binarySearch(int st,int en,int[] arr,long val)
     {
-     
+     int mid;
        while(st < en)
        {
          
-        int mid = (st+en)/2;
+        mid = (st+en)/2;
         if(arr[mid] < val)
         {
             if(mid==st)
@@ -18,18 +18,14 @@ class Solution {
             en = mid;
         }
        }
-       if(en==0)
-      {
-        return -1;
-      }
-       return st;
+       return (en==0)? -1:st;
     }
 
     public int[] successfulPairs(int[] spells, int[] potions, long success) {
         double s = (double) success;
         int slen = spells.length;
         int plen = potions.length;
-        int i,j;
+        int i;
         long val;
         Arrays.sort(potions);
         
@@ -37,8 +33,7 @@ class Solution {
         for(i = 0; i < slen; i++){
 
              val =(long) Math.ceil(s / spells[i]);
-            int n = binarySearch(0,plen,potions,val);
-            ans[i] = plen - n - 1;
+            ans[i] = plen - binarySearch(0,plen,potions,val) - 1;
             
         }
 
