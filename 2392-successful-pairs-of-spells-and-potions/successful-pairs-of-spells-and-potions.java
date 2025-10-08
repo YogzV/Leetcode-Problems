@@ -36,7 +36,7 @@ class Solution {
             ans[i] = plen - binarySearch(0,plen,potions,val) - 1;
             
         }
-
+        System.gc();
         return ans;
 
     }
