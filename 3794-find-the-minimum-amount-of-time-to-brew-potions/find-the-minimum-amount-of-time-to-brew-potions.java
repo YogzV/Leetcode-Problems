@@ -4,6 +4,7 @@ class Solution {
         int mlen = mana.length;
         long[] prevTime = new long[slen];
         int i,j;
+        long delay,time;
         prevTime[0] = skill[0] * mana[0];
         for(i=1;i<slen;i++)
         {
@@ -13,17 +14,16 @@ class Solution {
       
         for(j=1;j<mlen;j++)
         {
-            long delay = 0;
-            long time = 0;
+            delay = 0;
+            time = 0;
             for(i=0;i<slen;i++)
             {
-                if(time >= prevTime[i])
+                if(time < prevTime[i])
                 {
-                    time = time + skill[i]*mana[j];
-                }else{
-                    delay = delay + (prevTime[i]-time);
-                    time = time + (prevTime[i]-time) + skill[i] * mana[j];
+                    delay += prevTime[i]-time;
+                    time =  prevTime[i];    
                 }
+                time += skill[i]*mana[j];
             }
             
 
