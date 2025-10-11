@@ -12,8 +12,9 @@ class Solution {
 
         long take;
         int prev;
+        int i;
 
-        for (int i = 1; i < n; i++) {
+        for (i = 1; i < n; i++) {
              take = freq.get(keys.get(i)) * keys.get(i);
              prev = binarySearch(keys, i - 1, keys.get(i) - 3);
             if (prev >= 0) take += dp[prev];
@@ -25,8 +26,9 @@ class Solution {
 
     private int binarySearch(List<Integer> keys, int end, int value) {
         int l = 0, r = end, ans = -1;
+        int mid;
         while (l <= r) {
-            int mid = (l + r) / 2;
+            mid = (l + r) / 2;
             if (keys.get(mid) <= value) {
                 ans = mid;
                 l = mid + 1;
