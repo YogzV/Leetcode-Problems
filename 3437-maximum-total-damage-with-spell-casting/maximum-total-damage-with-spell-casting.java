@@ -1,7 +1,7 @@
 class Solution {
     public long maximumTotalDamage(int[] power) {
         Map<Integer, Long> freq = new HashMap<>();
-        for (int p : power) freq.put(p, freq.getOrDefault(p, 0L) + 1);
+        for (int p : power) freq.merge(p,1L,Long::sum);
 
         List<Integer> keys = new ArrayList<>(freq.keySet());
         Collections.sort(keys);
@@ -10,9 +10,12 @@ class Solution {
         long[] dp = new long[n];
         dp[0] = freq.get(keys.get(0)) * keys.get(0);
 
+        long take;
+        int prev;
+
         for (int i = 1; i < n; i++) {
-            long take = freq.get(keys.get(i)) * keys.get(i);
-            int prev = binarySearch(keys, i - 1, keys.get(i) - 3);
+             take = freq.get(keys.get(i)) * keys.get(i);
+             prev = binarySearch(keys, i - 1, keys.get(i) - 3);
             if (prev >= 0) take += dp[prev];
             dp[i] = Math.max(dp[i - 1], take);
         }
