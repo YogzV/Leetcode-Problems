@@ -10,30 +10,33 @@ class Solution {
        int len = list.size();
        int i;
        long[] dp = new long[len];
+       long take;
+       int prev;
        dp[0] = hmap.get(list.get(0)) * list.get(0);
        for(i=1;i<len;i++)
        {
-          long take = list.get(i) * hmap.get(list.get(i));
-          int prev = bsearch(i-1,list,list.get(i)-2,dp);
+          take = list.get(i) * hmap.get(list.get(i));
+          prev = bsearch(i-1,list,list.get(i)-2,dp);
           if(prev>=0)
           {
             take += dp[prev];
           }
           dp[i] = Math.max(take,dp[i-1]);
-          System.out.println(dp[i]);
+          
 
 
        }
        return dp[len-1];
     }
 
-    private static int bsearch(int index,List<Integer> list,int maxVal,long[] dp)
+    public static int bsearch(int index,List<Integer> list,int maxVal,long[] dp)
     {
         int st = 0,en = index;
         int ans = -1;
+        int mid;
         while(st <= en)
         {
-            int mid = (st+en)/2;
+            mid = (st+en)/2;
             if(list.get(mid) < maxVal)
             {
                 st = mid+1;
