@@ -8,12 +8,12 @@ class Solution {
        List<Integer> list = new ArrayList<>(hmap.keySet());
        Collections.sort(list);
        int len = list.size();
-       int i;
+       
        long[] dp = new long[len];
        long take;
        int prev;
        dp[0] = hmap.get(list.get(0)) * list.get(0);
-       for(i=1;i<len;i++)
+       for(int i=1;i<len;i++)
        {
           take = list.get(i) * hmap.get(list.get(i));
           prev = bsearch(i-1,list,list.get(i)-2,dp);
