@@ -1,39 +1,49 @@
 class Solution {
     public long maximumTotalDamage(int[] power) {
-        Map<Integer, Long> freq = new HashMap<>();
-        for (int p : power) freq.merge(p,1L,Long::sum);
+        HashMap<Integer,Long> hmap = new HashMap<>();
+       for(int i : power)
+       {
+        hmap.merge(i,1L,Long::sum);
+       } 
+       List<Integer> list = new ArrayList<>(hmap.keySet());
+       Collections.sort(list);
+       int len = list.size();
+       int i;
+       long[] dp = new long[len];
+       dp[0] = hmap.get(list.get(0)) * list.get(0);
+       for(i=1;i<len;i++)
+       {
+          long take = list.get(i) * hmap.get(list.get(i));
+          int prev = bsearch(i-1,list,list.get(i)-2,dp);
+          if(prev>=0)
+          {
+            take += dp[prev];
+          }
+          dp[i] = Math.max(take,dp[i-1]);
+          System.out.println(dp[i]);
 
-        List<Integer> keys = new ArrayList<>(freq.keySet());
-        Collections.sort(keys);
 
-        int n = keys.size();
-        long[] dp = new long[n];
-        dp[0] = freq.get(keys.get(0)) * keys.get(0);
-
-        long take;
-        int prev;
-        int i;
-
-        for (i = 1; i < n; i++) {
-             take = freq.get(keys.get(i)) * keys.get(i);
-             prev = binarySearch(keys, i - 1, keys.get(i) - 3);
-            if (prev >= 0) take += dp[prev];
-            dp[i] = Math.max(dp[i - 1], take);
-        }
-
-        return dp[n - 1];
+       }
+       return dp[len-1];
     }
 
-    private int binarySearch(List<Integer> keys, int end, int value) {
-        int l = 0, r = end, ans = -1;
-        int mid;
-        while (l <= r) {
-            mid = (l + r) / 2;
-            if (keys.get(mid) <= value) {
+    private static int bsearch(int index,List<Integer> list,int maxVal,long[] dp)
+    {
+        int st = 0,en = index;
+        int ans = -1;
+        while(st <= en)
+        {
+            int mid = (st+en)/2;
+            if(list.get(mid) < maxVal)
+            {
+                st = mid+1;
                 ans = mid;
-                l = mid + 1;
-            } else r = mid - 1;
+
+            }else{
+                en = mid-1;
+            }
         }
         return ans;
+
     }
 }
