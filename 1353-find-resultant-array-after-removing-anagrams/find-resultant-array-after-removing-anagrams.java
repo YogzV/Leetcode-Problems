@@ -9,16 +9,22 @@ class Solution {
             char[] arr = words[i].toCharArray();
             Arrays.sort(arr);
            String str = new String(arr);
-            char[] ar = words[j].toCharArray();
-            Arrays.sort(ar);
-            String s = new String(ar);
-          if(str.equals(s))
-          {
-            words[j] = "R";
-          }else{
-            i=j;
-          }
-          j++;
+           while(j<len)
+           {
+                char[] ar = words[j].toCharArray();
+                Arrays.sort(ar);
+                String s = new String(ar);
+              if(str.equals(s))
+                {
+                    words[j] = "R";
+                }else{
+                    i=j;
+                    j++;
+                    break;
+                }
+                j++;
+            }
+        
         }
         for(i=0;i<len;i++)
         {
