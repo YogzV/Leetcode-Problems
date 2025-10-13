@@ -3,17 +3,17 @@ class Solution {
         int len = words.length;
         int i=0,j=1;
         List<String> list = new ArrayList<>();
-        
+        String str,s;
         while(j<len)
         {
             char[] arr = words[i].toCharArray();
             Arrays.sort(arr);
-           String str = new String(arr);
+            str = new String(arr);
            while(j<len)
            {
                 char[] ar = words[j].toCharArray();
                 Arrays.sort(ar);
-                String s = new String(ar);
+                s = new String(ar);
               if(str.equals(s))
                 {
                     words[j] = "R";
