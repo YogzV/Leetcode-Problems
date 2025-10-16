@@ -1,24 +1,23 @@
 class Solution {
     public int findSmallestInteger(int[] nums, int value) { 
         int i;
-        int len = nums.length;
         HashMap<Integer,Integer> hmap = new HashMap<>();
 
-        for(i=0;i<len;i++)
+        for(i=0;i<nums.length;i++)
         {
             if(nums[i] < 0)
             {
-                nums[i] = nums[i]%value + value;
+                nums[i] =nums[i]%value + value;
             }
-            nums[i] = nums[i] % value;
+            nums[i] %= value;
             hmap.merge(nums[i],1,Integer::sum);
         }
-        int ans = 0;
-        while(hmap.computeIfPresent(ans%value,(k,v)-> v>0 ? v-1 : null) !=null)
+         i = 0;
+        while(hmap.computeIfPresent(i%value,(k,v)-> v>0 ? v-1 : null) !=null)
         {
-          ans++;
+          i++;
            
         }
-        return ans;
+        return i;
     }
 }
