@@ -1,18 +1,34 @@
 class Solution {
-    public int findSmallestInteger(int[] nums, int value) {
-        int[] remainderCount = new int[value];
+    public int findSmallestInteger(int[] nums, int value) { 
+        int i;
+        int len = nums.length;
+        HashMap<Integer,Integer> hmap = new HashMap<>();
 
-        for (int num : nums) {
-            int rem = ((num % value) + value) % value;
-            remainderCount[rem]++;
+        for(i=0;i<len;i++)
+        {
+            if(nums[i] < 0)
+            {
+                nums[i] = nums[i]%value + value;
+            }
+            nums[i] = nums[i] % value;
+            hmap.merge(nums[i],1,Integer::sum);
         }
-
-        int result = 0;
-        while (remainderCount[result % value] > 0) {
-            remainderCount[result % value]--;
-            result++;
+        int ans = 0;
+        while(true)
+        {
+          
+           if(hmap.containsKey(ans%value)){
+            if(hmap.get(ans%value) > 0)
+            {
+                hmap.merge(ans%value,-1,Integer::sum);
+            }else{
+                break;
+            }
+           }else{
+            break;
+           }
+           ans++;
         }
-
-        return result;
+        return ans;
     }
 }
