@@ -14,20 +14,10 @@ class Solution {
             hmap.merge(nums[i],1,Integer::sum);
         }
         int ans = 0;
-        while(true)
+        while(hmap.computeIfPresent(ans%value,(k,v)-> v>0 ? v-1 : null) !=null)
         {
-          
-           if(hmap.containsKey(ans%value)){
-            if(hmap.get(ans%value) > 0)
-            {
-                hmap.merge(ans%value,-1,Integer::sum);
-            }else{
-                break;
-            }
-           }else{
-            break;
-           }
-           ans++;
+          ans++;
+           
         }
         return ans;
     }
