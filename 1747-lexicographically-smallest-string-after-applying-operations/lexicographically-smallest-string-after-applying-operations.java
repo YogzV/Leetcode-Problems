@@ -1,24 +1,42 @@
 class Solution {
     public String findLexSmallestString(String s, int a, int b) {
-        Set<String> vis = new HashSet<>();
-        String smallest = s;
-        Deque<String> q = new ArrayDeque<>();
-        q.offer(s);
-        vis.add(s);
+        String ans = s;
+        HashMap<String,Integer> hmap = new HashMap<>();
+        hmap.put(s,1);
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(s);
+        int rot = s.length() - b;
+        while(!queue.isEmpty())
+        {
+           
+            String str = queue.poll();
+             if(ans.compareTo(str) > 0)
+             {
+               ans = str;
+             }
+            int len = str.length();
+            StringBuilder added = new StringBuilder(str);
+            for(int i = 1 ; i<len;i+=2)
+            {
+                added.setCharAt(i,(char) ((((str.charAt(i)-'0')+a) %10) + '0')) ;
+            } 
+            StringBuilder rotate = new StringBuilder();
+           rotate.append(str.substring(rot,len));
+           rotate.append(str.substring(0,rot));
+           
+           if(!hmap.containsKey(added.toString()))
+           {
+            hmap.put(added.toString(),1);
+            queue.offer(added.toString());
+           }
+           if(!hmap.containsKey(rotate.toString()))
+           {
+            hmap.put(rotate.toString(),1);
+            queue.offer(rotate.toString());
+           }
 
-        while (!q.isEmpty()) {
-            String cur = q.poll();
-            if (cur.compareTo(smallest) < 0) smallest = cur;
-
-            StringBuilder sb = new StringBuilder(cur);
-            for (int i = 1; i < sb.length(); i += 2)
-                sb.setCharAt(i, (char) ((sb.charAt(i) - '0' + a) % 10 + '0'));
-            String added = sb.toString();
-            if (vis.add(added)) q.offer(added);
-
-            String rotated = cur.substring(cur.length() - b) + cur.substring(0, cur.length() - b);
-            if (vis.add(rotated)) q.offer(rotated);
         }
-        return smallest;
+        
+        return ans;
     }
 }
