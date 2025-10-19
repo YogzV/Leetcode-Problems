@@ -8,6 +8,8 @@ class Solution {
         int rot = s.length() - b;
         int len = s.length();
         String str;
+        int val;
+        char c;
         while(!queue.isEmpty())
         {
            
@@ -20,8 +22,8 @@ class Solution {
             StringBuilder added = new StringBuilder(str);
             for(b = 1 ; b<len;b+=2)
             {
-                int val = (str.charAt(b)-'0' + a) %10;
-                char c = (char)(val+'0');
+                val = (str.charAt(b)-'0' + a) %10;
+                c = (char)(val+'0');
 
                 added.setCharAt(b,c);
             } 
@@ -30,7 +32,6 @@ class Solution {
            String add = added.toString();
            if(vis.add(add))
            {
-           
             queue.offer(add);
            }
            if(vis.add(rotate))
