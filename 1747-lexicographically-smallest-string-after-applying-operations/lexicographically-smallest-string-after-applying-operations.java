@@ -7,10 +7,11 @@ class Solution {
         queue.offer(s);
         int rot = s.length() - b;
         int len = s.length();
+        String str;
         while(!queue.isEmpty())
         {
            
-            String str = queue.poll();
+              str = queue.poll();
              if(ans.toString().compareTo(str) > 0)
              {
                ans = new StringBuilder(str);
