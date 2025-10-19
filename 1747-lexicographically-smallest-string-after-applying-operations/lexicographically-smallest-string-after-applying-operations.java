@@ -1,6 +1,6 @@
 class Solution {
     public String findLexSmallestString(String s, int a, int b) {
-        StringBuilder ans = new StringBuilder(s); 
+        String ans = s ; 
         HashMap<String,Integer> hmap = new HashMap<>();
         hmap.put(s,1);
         Queue<String> queue = new LinkedList<>();
@@ -12,9 +12,9 @@ class Solution {
         {
            
               str = queue.poll();
-             if(ans.toString().compareTo(str) > 0)
+             if(ans.compareTo(str) > 0)
              {
-               ans = new StringBuilder(str);
+               ans = str;
              }
             
             StringBuilder added = new StringBuilder(str);
@@ -25,23 +25,22 @@ class Solution {
 
                 added.setCharAt(i,c);
             } 
-            StringBuilder rotate = new StringBuilder();
-           rotate.append(str.substring(rot,len));
-           rotate.append(str.substring(0,rot));
+            
+           String rotate = str.substring(rot,len) + str.substring(0,rot) ;
            
            if(!hmap.containsKey(added.toString()))
            {
             hmap.put(added.toString(),1);
             queue.offer(added.toString());
            }
-           if(!hmap.containsKey(rotate.toString()))
+           if(!hmap.containsKey(rotate))
            {
-            hmap.put(rotate.toString(),1);
-            queue.offer(rotate.toString());
+            hmap.put(rotate,1);
+            queue.offer(rotate);
            }
 
         }
         
-        return ans.toString();
+        return ans;
     }
 }
