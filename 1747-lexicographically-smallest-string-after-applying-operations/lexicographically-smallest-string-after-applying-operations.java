@@ -20,7 +20,10 @@ class Solution {
             StringBuilder added = new StringBuilder(str);
             for(int i = 1 ; i<len;i+=2)
             {
-                added.setCharAt(i,(char) ((((str.charAt(i)-'0')+a) %10) + '0')) ;
+                int val = (str.charAt(i)-'0' + a) %10;
+                char c = (char)(val+'0');
+
+                added.setCharAt(i,c);
             } 
             StringBuilder rotate = new StringBuilder();
            rotate.append(str.substring(rot,len));
