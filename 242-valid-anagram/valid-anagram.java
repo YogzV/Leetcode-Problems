@@ -12,10 +12,7 @@ class Solution {
         {
             if(!hmap.containsKey(t.charAt(i))) return false;
             else{
-                hmap.computeIfPresent(t.charAt(i),(k,v)->{
-                    if(v==1) return null;
-                    else return v-1;
-                });
+                hmap.computeIfPresent(t.charAt(i),(k,v)-> (v==1)? null:v-1);
             }
         }
         return true;
