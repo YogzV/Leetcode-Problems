@@ -3,22 +3,28 @@ class Solution {
         String s = String.valueOf(n+1);
         while(true)
         {
-            int i,len = s.length();
-            int[] freq = new int[10];
-            for(i=0;i<len;i++)
-            {
-                freq[s.charAt(i)-'0']++;
-            }
             
-            if(correctNumber(s,freq)) 
+            
+            if(correctNumber(s)) 
                  return Integer.parseInt(s);
             s = String.valueOf(Integer.parseInt(s) + 1);
         }
     }
 
-    public static boolean correctNumber(String s,int[] freq)
+    public static boolean correctNumber(String s)
     {
-       int i,len = s.length();
+
+            int i,len = s.length();
+            int[] freq = new int[10];
+            for(i=0;i<len;i++)
+            {
+                int val = s.charAt(i) - '0';
+                freq[val]++;
+                if(freq[val] > val)
+                 return false;
+
+            }
+    
        for(i=0;i<len;i++)
        {
         int val = s.charAt(i) - '0';
