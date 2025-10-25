@@ -1,11 +1,11 @@
 class Solution {
     public int totalMoney(int n) {
-        int i;
+        
         int ans = 0;
         int money = 1;
         int cnt = 0;
         int sub = 2;
-        for(i=0;i<n;i++)
+        while(n-- > 0)
         {
             ans+=money;
             cnt++;
