@@ -21,9 +21,13 @@ class Bank {
     }
     
     public boolean withdraw(int account, long money) {
-        if(account-1 > balance.length || this.balance[account-1] < money) return false;
+        if(account-1 > balance.length) return false; 
+        if(this.balance[account-1] >= money)
+        {
         this.balance[account-1] -= money;
         return true;
+        }
+        return false;
     }
 }
 
