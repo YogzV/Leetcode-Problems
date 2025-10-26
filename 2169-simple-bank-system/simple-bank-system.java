@@ -1,32 +1,25 @@
 class Bank {
-     static HashMap<Integer,Long> hmap = new HashMap<>();
-     static int size;
+     long[] balance;
     public Bank(long[] balance) {
-        int i;
-        size = balance.length;
-        for(i=0;i<size;i++)
-        {
-            hmap.put(i+1,balance[i]);
-        }
+        this.balance = balance;
     }
     
     public boolean transfer(int account1, int account2, long money) {
-        if(account1<1 || account1>size || account2<1 || account2>size|| hmap.get(account1) < money) return false;
-        hmap.replace(account1,hmap.get(account1) - money);
-        hmap.replace(account2,hmap.get(account2) + money);
-        return true;
+        if(account1 -1 > balance.length || account2-1> balance.length ) return false;
+        if(withdraw(account1,money))
+         return deposit(account2,money);
+        return false;
     }
     
     public boolean deposit(int account, long money) {
-        if(account<1 || account> size) return false;
-        hmap.replace(account,money+hmap.get(account));
+        if(account-1 > balance.length) return false;
+        this.balance[account-1] += money;
         return true;
     }
     
     public boolean withdraw(int account, long money) {
-        if(account<1 || account>size || hmap.get(account) < money) return false;
-       
-        hmap.replace(account,hmap.get(account) - money);
+        if(account-1>balance.length || this.balance[account-1] < money) return false;
+        this.balance[account-1] -= money;
         return true;
     }
 }
