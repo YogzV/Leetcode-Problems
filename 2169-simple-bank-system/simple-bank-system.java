@@ -1,5 +1,5 @@
 class Bank {
-     long[] balance;
+     private long[] balance;
     public Bank(long[] balance) {
         this.balance = balance;
     }
