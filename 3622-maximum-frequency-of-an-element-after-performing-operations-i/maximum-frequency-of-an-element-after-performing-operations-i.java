@@ -8,14 +8,15 @@ class Solution {
          }
          int len = nums.length;
          int res = 0;
-         for(int i = nums[0];i<=nums[len-1] ;i++)
+         int lele = nums[len-1];
+         
+         for(int i = nums[0];i<=lele;i++)
          {
-            int min = i - k;
-            int max = i + k;
+           
             int val = 0;
           
-            int lind = lowerBound(nums,min,0,len-1);
-            int uind = upperBound(nums,max,0,len-1);
+            int lind = lowerBound(nums,i-k,0,len-1);
+            int uind = upperBound(nums,i+k,0,len-1);
             if(hmap.containsKey(i))
              val = hmap.get(i);
            
