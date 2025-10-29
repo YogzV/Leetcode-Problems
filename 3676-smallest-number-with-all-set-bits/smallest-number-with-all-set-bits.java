@@ -4,19 +4,14 @@ class Solution {
         int val;
         while(true)
         {
-            val = (int)Math.pow(2,i);
+            val = (int)Math.pow(2,i++);
             if(val > n)
             {
                 break;
             }
-            i++;
+            
         }
         
-        i--;
-        
-        
-        
-        if((int)Math.pow(2,i) -1  == n) return n;
-        return ((int)Math.pow(2,i+1))-1;
+        return val-1;
     }
 }
