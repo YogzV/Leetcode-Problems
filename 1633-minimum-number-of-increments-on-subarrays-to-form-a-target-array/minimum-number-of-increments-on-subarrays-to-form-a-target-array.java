@@ -7,10 +7,12 @@ class Solution {
         {
             if(target[i] > target[i-1])
             {
+                
                  val = target[i]-target[i-1];
                 ans += val;
             }
         }
+        System.gc();
         return ans;
     }
 }
