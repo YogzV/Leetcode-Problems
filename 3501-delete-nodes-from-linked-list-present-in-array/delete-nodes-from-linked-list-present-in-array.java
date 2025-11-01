@@ -29,8 +29,8 @@ class Solution {
         {
            if(!hmap.containsKey(temp.val))
            {
-               prev.next = temp;
-               prev = temp;
+               prev = prev.next = temp;
+            
            }
            temp = temp.next;
         }
