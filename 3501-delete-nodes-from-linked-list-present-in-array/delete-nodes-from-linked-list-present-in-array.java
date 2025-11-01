@@ -15,20 +15,27 @@ class Solution {
         {
            hmap.put(i,1);
         }
-        ListNode temp = head;
-        ListNode prev = new ListNode();
-        ListNode temp2 = prev;
+        while(true)
+        {
+          if(hmap.containsKey(head.val))
+           head = head.next;
+          else
+           break;
+        }
+
+        ListNode temp = head.next;
+        ListNode prev = head;
         while(temp!=null)
         {
            if(!hmap.containsKey(temp.val))
            {
                prev.next = temp;
-               prev = prev.next;
+               prev = temp;
            }
            temp = temp.next;
         }
         prev.next = null;
-        return temp2.next;
+        return head;
 
 
 
