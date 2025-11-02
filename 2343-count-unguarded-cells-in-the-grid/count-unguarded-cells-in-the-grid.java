@@ -1,71 +1,44 @@
 class Solution {
     public int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
-        int[][] grid = new int[m][n];
+        // Initialize grid with zeros
+        int[][] g = new int[m][n];
         
-        int ans = m*n;
-      
-        Queue<int[]> queue = new LinkedList<>();
-        for(int i=walls.length-1;i>=0;i--)
-        {
-            grid[walls[i][0]][walls[i][1]] = 1;
-            ans--;
-        } 
-       
-        for(int i=guards.length-1;i>=0;i--)
-        {
-            grid[guards[i][0]][guards[i][1]] = 1;
-            ans--;
-            queue.offer(new int[]{guards[i][0] , guards[i][1]});
+        // Mark guards and walls as 2
+        for (int[] e : guards) {
+            g[e[0]][e[1]] = 2;
         }
-  
-         while(!queue.isEmpty())
-         {
-           int[] pt = queue.poll();
-           int x = pt[0];
-           int y = pt[1];
-           ans = Traverse(grid,x,y,1,1,ans);
-           ans = Traverse(grid,x,y,-1,1,ans);
-           ans = Traverse(grid,x,y,1,0,ans);
-           ans = Traverse(grid,x,y,-1,0,ans);
-          
-         }
-           
-       
-        return ans;
+        for (int[] e : walls) {
+            g[e[0]][e[1]] = 2;
+        }
+        
+        // Directions: up, right, down, left
+        int[] dirs = {-1, 0, 1, 0, -1};
+        
+        // Process each guard's line of sight
+        for (int[] e : guards) {
+            for (int k = 0; k < 4; ++k) {
+                int x = e[0], y = e[1];
+                int dx = dirs[k], dy = dirs[k + 1];
+                
+                // Check cells in current direction until hitting boundary or obstacle
+                while (x + dx >= 0 && x + dx < m && y + dy >= 0 && y + dy < n && g[x + dx][y + dy] < 2) {
+                    x += dx;
+                    y += dy;
+                    g[x][y] = 1;
+                }
+            }
+        }
+        
+        // Count unguarded cells (cells with value 0)
+        int unguardedCount = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (g[i][j] == 0) {
+                    unguardedCount++;
+                }
+            }
+        }
+        
+        return unguardedCount;
     }
-
-    private static int Traverse(int[][] grid,int row,int col,int mov,int dir,int ans){
-         int m = grid.length;
-         int n = grid[0].length;
-         if(dir == 1)
-         {
-            row+=mov;
-         }else{
-            col+=mov;
-         }
-         while(row>=0 && row<m && col>=0 && col<n)
-         {
-             if(grid[row][col]==1)  break;
-             else if(grid[row][col] == -1){
-                      if(dir == 1)
-           {
-            row+=mov;
-         }else{
-            col+=mov;
-         }
-                   continue; 
-            }else{
-                grid[row][col] = -1;
-                ans--;
-             }
-            if(dir == 1)
-           {
-            row+=mov;
-         }else{
-            col+=mov;
-         }
-         }
-         return ans;
-    }
-    
 }
