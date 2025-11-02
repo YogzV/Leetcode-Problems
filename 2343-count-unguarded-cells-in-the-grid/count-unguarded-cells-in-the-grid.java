@@ -1,18 +1,20 @@
 class Solution {
     public int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
         int[][] grid = new int[m][n];
-        int i,j;
-        int ans = 0;
-        int row = walls.length;
+        
+        int ans = m*n;
+      
         Queue<int[]> queue = new LinkedList<>();
-        for(i=0;i<row;i++)
+        for(int i=walls.length-1;i>=0;i--)
         {
             grid[walls[i][0]][walls[i][1]] = 1;
+            ans--;
         } 
-        row = guards.length;
-        for(i=0;i<row;i++)
+       
+        for(int i=guards.length-1;i>=0;i--)
         {
             grid[guards[i][0]][guards[i][1]] = 1;
+            ans--;
             queue.offer(new int[]{guards[i][0] , guards[i][1]});
         }
   
@@ -21,58 +23,49 @@ class Solution {
            int[] pt = queue.poll();
            int x = pt[0];
            int y = pt[1];
-           TraverseUpOrDown(grid,x,y,1);
-           TraverseUpOrDown(grid,x,y,-1);
-           TraverseRightOrLeft(grid,x,y,1);
-           TraverseRightOrLeft(grid,x,y,-1);
+           ans = Traverse(grid,x,y,1,1,ans);
+           ans = Traverse(grid,x,y,-1,1,ans);
+           ans = Traverse(grid,x,y,1,0,ans);
+           ans = Traverse(grid,x,y,-1,0,ans);
           
          }
            
-        for(i=0;i<m;i++)
-        {
-            for(j=0;j<n;j++)
-            {
-                if(grid[i][j] == 0)
-                 ans++;
-            }
-        }
+       
         return ans;
     }
 
-    private static void TraverseUpOrDown(int[][] grid,int row,int col,int mov){
-         int size = grid.length;
-         row += mov;
-         while(row>=0 && row<size)
+    private static int Traverse(int[][] grid,int row,int col,int mov,int dir,int ans){
+         int m = grid.length;
+         int n = grid[0].length;
+         if(dir == 1)
          {
-             if(grid[row][col]==0)
-             {
-                grid[row][col] = -1;
-             }else if(grid[row][col] == -1){
-                   row +=mov;
-                   continue; 
-                }else{
-                break;
-             }
-             row+=mov;
+            row+=mov;
+         }else{
+            col+=mov;
          }
+         while(row>=0 && row<m && col>=0 && col<n)
+         {
+             if(grid[row][col]==1)  break;
+             else if(grid[row][col] == -1){
+                      if(dir == 1)
+           {
+            row+=mov;
+         }else{
+            col+=mov;
+         }
+                   continue; 
+            }else{
+                grid[row][col] = -1;
+                ans--;
+             }
+            if(dir == 1)
+           {
+            row+=mov;
+         }else{
+            col+=mov;
+         }
+         }
+         return ans;
     }
     
-    private static void TraverseRightOrLeft(int[][] grid,int row,int col,int mov){
-           int size = grid[0].length;
-           col+=mov;
-         while(col>=0 && col<size)
-         {
-             if(grid[row][col]==0)
-             {
-                grid[row][col] = -1;
-             }else if(grid[row][col] == -1)
-             {
-                col+=mov;
-                continue;
-             }else{
-                break;
-             }
-             col+=mov;
-         }
-    }
 }
