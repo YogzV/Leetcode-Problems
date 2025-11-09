@@ -1,8 +1,9 @@
 class Solution {
     public int countOperations(int num1, int num2) {
+        int temp;
         if(num2 > num1)
         {
-            int temp = num1;
+            temp = num1;
             num1 = num2;
             num2 = temp;
         }
@@ -10,11 +11,11 @@ class Solution {
 
         while(num2 != 0)
         {
-            int quo = num1 / num2;
-            ans += quo;
-            int rem = num1 % num2;
+            
+            ans += num1/num2;
+            temp = num1 % num2;
             num1 = num2;
-            num2 = rem;
+            num2 = temp;
 
         }
         return ans;
