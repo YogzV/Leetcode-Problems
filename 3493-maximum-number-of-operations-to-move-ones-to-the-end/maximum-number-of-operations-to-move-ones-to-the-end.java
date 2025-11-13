@@ -14,14 +14,12 @@ class Solution {
             }
             if(oneOccur && (i+1)<len &&  s.charAt(i+1) == '0')
             {
-                
                 i++;
-                while(i<len && s.charAt(i) == '0')
-                {
+                while(i<len && s.charAt(i) == '0'){
                     i++;
                 }
-                ans++;
-                ans += oneCnt -1;
+            
+                ans += oneCnt;
                 
 
             }else{
