@@ -14,7 +14,7 @@ class Solution {
             }
             if(oneOccur && (i+1)<len &&  s.charAt(i+1) == '0')
             {
-                System.out.println(oneCnt);
+                
                 i++;
                 while(i<len && s.charAt(i) == '0')
                 {
