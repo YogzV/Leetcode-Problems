@@ -5,8 +5,11 @@ class Solution {
         for(int i =0;i<size;i++){
             hset.add(nums[i]);
         }
-        while(hset.contains(original)){
-            original *=2;
+        while(true){
+            if(hset.contains(original))
+             original *=2;
+             else
+              break;
         }
         return original;
     }
