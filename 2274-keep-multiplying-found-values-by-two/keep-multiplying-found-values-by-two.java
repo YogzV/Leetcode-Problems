@@ -1,10 +1,11 @@
 class Solution {
     public int findFinalValue(int[] nums, int original) {
-        HashMap<Integer,Integer> hmap = new HashMap<>();
-        for(int i : nums){
-            hmap.merge(i,1,Integer::sum);
+        HashSet<Integer> hset = new HashSet<>();
+        int size = nums.length;
+        for(int i =0;i<size;i++){
+            hset.add(nums[i]);
         }
-        while(hmap.containsKey(original)){
+        while(hset.contains(original)){
             original *=2;
         }
         return original;
