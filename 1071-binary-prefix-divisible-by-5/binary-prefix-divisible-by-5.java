@@ -4,35 +4,14 @@ class Solution {
         List<Boolean> list = new ArrayList<>();
         int i;
         int size = nums.length;
-        long val = 0;
+        int val = nums[0];
 
-        if(nums[0] == 1)
-         val = 1;
-        
-        for(i=0;i<size;i++)
+        for(i=0;i<size-1;i++)
         {
-            if(val%5==0)
-            {
-                list.add(true);
-            }else{
-                list.add(false);
-            }
-
-             val*=2;
-            if(i<size-1)
-            {
-                if(nums[i+1] == 1)
-                {
-                    val+=1;
-                }
-            }
-            val = val%10;
+           list.add(val%5 == 0? true:false);
+           val = ((val*2) + nums[i+1])%10;
         }
-        
-        
-
-        
-        
+        list.add(val%5 == 0? true:false);
         return list;
     }
 }
