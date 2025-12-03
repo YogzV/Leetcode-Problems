@@ -6,20 +6,22 @@ class Solution {
        long res = 0;
        int size = points.length;
        long totalLines = 0;
+       long pts,lines;
        for(i=0;i<size;i=j)
        {
          j = i+1;
         while(j<size && points[i][1] == points[j][1]){
             j++;
         }
-        long pts = j-i;
-        long lines = (pts * (pts-1)) /2;
-        res = (res + totalLines * lines) % Mod;
-        totalLines = totalLines + lines;
+        
+        pts = j-i;
+        lines = (pts * (pts-1)) /2;
+        res += totalLines * lines;
+        totalLines += lines;
         
 
        }
-       return (int)res;
+       return (int)(res%Mod);
 
     }
 }
