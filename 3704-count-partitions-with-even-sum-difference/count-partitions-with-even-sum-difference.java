@@ -5,6 +5,7 @@ class Solution {
         int size = nums.length;
         int rightsum = 0;
         int leftsum = 0;
+        int diff;
         for(i=0;i<size;i++)
         {
           rightsum+=nums[i];
@@ -13,7 +14,7 @@ class Solution {
         {
             leftsum += nums[i];
             rightsum -= nums[i];
-            int diff = Math.abs(rightsum - leftsum);
+            diff = Math.abs(rightsum - leftsum);
             if((diff & 1) == 0){
                 ans++;
             }
