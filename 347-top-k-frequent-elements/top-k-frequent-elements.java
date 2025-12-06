@@ -5,9 +5,11 @@ class Solution {
         {
             hmap.merge(i,1,Integer::sum);
         }
-        PriorityQueue<int[]> pqueue = new PriorityQueue<>((a,b) -> b[1] - a[1]);
+        PriorityQueue<int[]> pqueue = new PriorityQueue<>((a,b) -> a[1] - b[1]);
         for(Integer in : hmap.keySet()){
             pqueue.offer(new int[]{in,hmap.get(in)});
+            if(pqueue.size() > k)
+              pqueue.poll();
         }
         int[] ans = new int[k];
         while(k-- > 0)
