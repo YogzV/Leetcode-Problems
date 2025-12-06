@@ -1,19 +1,23 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
-        if(s.length()!=t.length()) return false;
-        HashMap<Character,Integer> hmap = new HashMap<>();
-        int i;
-        int len = s.length();
-        for(i=0;i<len;i++)
+        
+        int[] freq = new int[26];
+        for(char ch : s.toCharArray())
         {
-            hmap.merge(s.charAt(i),1,Integer::sum);
+            freq[ch-97]++;
         }
-        for(i=0;i<len;i++)
+        for(char ch : t.toCharArray())
         {
-            if(!hmap.containsKey(t.charAt(i))) return false;
-            else{
-                hmap.computeIfPresent(t.charAt(i),(k,v)-> (v==1)? null:v-1);
-            }
+            int val = ch-97;
+            if(freq[val] == 0)
+             return false;
+            
+            freq[val]--;
+        }
+        for(int i=0;i<26;i++)
+        {
+            if(freq[i] !=0)
+             return false;
         }
         return true;
     }
