@@ -23,13 +23,12 @@ class Solution {
                     start++;
                 }else{
                    list.add(Arrays.asList(nums[i],nums[start],nums[end]));
-                   int temp1 = nums[start];
-                   int temp2 = nums[end];
+                   
                    start++;
                    end--;
-                   while(start < end && nums[start]==temp1 && nums[end] == temp2){
+                   while(start < end && nums[start] == nums[start-1]){
                     start++;
-                    end--;
+                    
                    } 
                 }
             }
