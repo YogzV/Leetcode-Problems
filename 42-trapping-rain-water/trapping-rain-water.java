@@ -19,7 +19,7 @@ class Solution {
             max = Math.max(max,height[i]);
         }
         int water = 0;
-        for(int i =0;i<size;i++)
+        for(int i =1;i<size;i++)
         {
 
             if(leftwall[i]>height[i] && rightwall[i] > height[i])
