@@ -13,14 +13,16 @@ class Solution {
             if(leftMax <= rightMax)
             {
                 start++;
-                water += Math.max(0,leftMax - height[start]);
+               
                 leftMax = Math.max(leftMax,height[start]);
+                 water += leftMax - height[start];
                 
                 
             }else{
                 end--;
-                water += Math.max(0,rightMax - height[end]);
+               
                 rightMax = Math.max(rightMax,height[end]);
+                 water += rightMax - height[end];
                 
             }
             System.out.println(water);
