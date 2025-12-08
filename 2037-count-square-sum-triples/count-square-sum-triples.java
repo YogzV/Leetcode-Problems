@@ -11,7 +11,7 @@ class Solution {
                 int val =(i*i) + (j*j);
               
                 if(val > max) break;
-                System.out.println(val);
+                
                 int c = (int)Math.sqrt(val);
                 int check = c * c;
                 
