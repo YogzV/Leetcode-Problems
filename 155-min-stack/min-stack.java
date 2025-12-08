@@ -1,31 +1,41 @@
 class MinStack {
 
-    PriorityQueue<Integer> pqueue;
-    ArrayList<Integer> stack;
+    Stack<Integer> stack;
+    Stack<Integer> minStack;
 
     public MinStack() {
-        stack = new ArrayList<>();
-        pqueue = new PriorityQueue<>();
-        
+
+     stack = new Stack<Integer>();
+     minStack = new Stack<Integer>();
+
     }
     
     public void push(int val) {
-        stack.add(val);
-        pqueue.offer(val);
+        stack.push(val);
+        if(minStack.isEmpty()){
+          minStack.push(val);
+        }
+        else if(minStack.peek() >= val){
+            minStack.push(val);
+        }
+        
     }
     
     public void pop() {
-        int val  = stack.get(stack.size()-1);
-        stack.remove(stack.size()-1);
-        pqueue.remove(val);
+        int val = stack.pop();
+        if(minStack.peek() == val){
+          minStack.pop();
+        }
+        
     }
     
     public int top() {
-        return stack.get(stack.size()-1);
+        return stack.peek();
     }
     
     public int getMin() {
-        return pqueue.peek();
+        
+        return minStack.peek();
     }
 }
 
