@@ -3,8 +3,9 @@ class Solution {
 
         long MOD = 1000000007;
         HashMap<Integer,ArrayList<Integer>> hmap = new HashMap<>();
-        int size = nums.length;
+        int prev,target;
         long ans = 0;
+        long prevAvail,nextAvail;
         for(int i : nums)
         {
            hmap.putIfAbsent(i,new ArrayList<>(Arrays.asList(0,0)));
@@ -13,21 +14,21 @@ class Solution {
        
        for(int i : nums)
        {
-          int target = i * 2;
+           target = i * 2;
           if(hmap.containsKey(target))
           {
-             long prevAvail = hmap.get(target).get(1) ;
-             long nextAvail = hmap.get(target).get(0) - hmap.get(target).get(1) ;
+              prevAvail = hmap.get(target).get(1) ;
+              nextAvail = hmap.get(target).get(0) - hmap.get(target).get(1) ;
               
              if(i == target){
                 nextAvail--;
              }
 
              ans += (prevAvail * nextAvail);
-             System.out.println(ans);
+            
           }
           
-          int prev = hmap.get(i).get(1);
+          prev = hmap.get(i).get(1);
           hmap.get(i).set(1,prev+1);
        }
 
