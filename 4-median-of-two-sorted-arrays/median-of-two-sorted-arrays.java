@@ -16,14 +16,15 @@ class Solution {
         int start = 0;
         int end = len1;
         int mid1,mid2;
+        int Aleft,Aright,Bleft,Bright;
         while(start <= end)
         {
-            mid1 = (start+end)/2;
+            mid1 = (start+end)>>1;
             mid2 = half - mid1 ;
-            int Aleft = (mid1-1)>=0 ? nums1[mid1-1] : Integer.MIN_VALUE;
-            int Aright = (mid1)<len1 ? nums1[mid1] : Integer.MAX_VALUE;
-            int Bleft = (mid2-1)>=0 ? nums2[mid2-1] : Integer.MIN_VALUE;
-            int Bright = (mid2)<len2 ? nums2[mid2] : Integer.MAX_VALUE;
+            Aleft = (mid1-1)>=0 ? nums1[mid1-1] : Integer.MIN_VALUE;
+            Aright = (mid1)<len1 ? nums1[mid1] : Integer.MAX_VALUE;
+            Bleft = (mid2-1)>=0 ? nums2[mid2-1] : Integer.MIN_VALUE;
+            Bright = (mid2)<len2 ? nums2[mid2] : Integer.MAX_VALUE;
 
             if(Aleft <= Bright && Bleft <= Aright){
                 if((total & 1) == 1){
