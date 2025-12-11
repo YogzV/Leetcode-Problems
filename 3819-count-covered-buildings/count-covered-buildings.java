@@ -14,33 +14,31 @@ class Solution {
 
        for(int i=0;i<n;i++)
        {
-        Arrays.fill(col[i],-1);
+         col[i][0] = n;
+         col[i][1] = -1;
        }   
 
-        for(int i = buildings.length-1;i>=0;i--)
+        for(int[] pt : buildings)
         {
-            x = buildings[i][0] - 1;
-            y = buildings[i][1] - 1 ;
+            x = pt[0] - 1;
+            y = pt[1] - 1 ;
             
             row[0][y] = Math.min(row[0][y],x);
             row[1][y] = Math.max(row[1][y],x);
             
 
-            col[x][0] = ( col[x][0] ==-1? y : Math.min(col[x][0],y) );
-            col[x][1] = ( col[x][1] == -1? y : Math.max(col[x][1],y) );
+            col[x][0] = Math.min(col[x][0],y);
+            col[x][1] = Math.max(col[x][1],y);
             
         }
        
-     
-        
-       
-        for(int i = buildings.length-1;i>=0;i--)
+        for(int[] pt : buildings)
         {
-             x = buildings[i][0] - 1;
-             y = buildings[i][1] - 1;
+             x = pt[0] - 1;
+             y = pt[1] - 1;
 
              if(x > row[0][y] && x < row[1][y] && y>col[x][0] && y<col[x][1])
-              ans++;
+               ans++;
 
         }
         return ans;
