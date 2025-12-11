@@ -3,10 +3,12 @@ class Solution {
         int fp=0;
         int sp=1;
         int profit = 0;
-        while(sp<prices.length){
+        int len = prices.length;
+        while(sp< len){
 
-            profit = Math.max(profit,prices[sp] - prices[fp]);
-            if(prices[sp] < prices[fp]){
+            if(prices[sp] > prices[fp]){
+                profit = Math.max(profit,prices[sp] - prices[fp]);
+            }else{
                 fp = sp;
             }
             sp++;
