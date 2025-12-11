@@ -6,8 +6,8 @@ class Solution {
         while(sp<prices.length){
 
             profit = Math.max(profit,prices[sp] - prices[fp]);
-            while(prices[sp] < prices[fp]){
-                fp++;
+            if(prices[sp] < prices[fp]){
+                fp = sp;
             }
             sp++;
         }
