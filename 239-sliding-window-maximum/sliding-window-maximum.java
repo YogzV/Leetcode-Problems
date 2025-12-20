@@ -15,12 +15,8 @@ class Solution {
             pqueue.offer(new int[]{nums[sp],sp});
             sp++;
            
-            while(!pqueue.isEmpty()){
-                int[] pt = pqueue.peek();
+            while(pqueue.peek()[1] < fp){
                 
-                if(pt[1] >= fp){
-                  break;
-                }
                 pqueue.poll();
             }
             ans[fp] = pqueue.peek()[0]; 
