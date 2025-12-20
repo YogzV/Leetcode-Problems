@@ -49,6 +49,6 @@ class Solution{
         if(min > len1)
          return "";
         
-        return s.substring(start,end+1);
+        return s.substring(start,start+min);
     }
 }
