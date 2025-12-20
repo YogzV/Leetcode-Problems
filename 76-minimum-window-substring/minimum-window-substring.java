@@ -1,54 +1,47 @@
-class Solution{
+class Solution {
     public String minWindow(String s, String t) {
-        int len1 = s.length();
-        int len2 = t.length();
-        if(len2 > len1) return "";
+        if (t.length() > s.length()) return "";
 
-        Map<Character,Integer> tmap = new HashMap<>();
-        Map<Character,Integer> window = new HashMap<>();
+        int[] freq = new int[128];
 
-        for(char ch : t.toCharArray())
-        {
-            tmap.merge(ch,1,Integer::sum);
+        // Count frequency of t
+        for (char c : t.toCharArray()) {
+            freq[c]++;
         }
-        int fp = 0;
-        int sp = 0;
+
+        int left = 0, right = 0;
+        int required = t.length();
+        int minLen = Integer.MAX_VALUE;
         int start = 0;
-        int end = 0;
-        int min = Integer.MAX_VALUE;
-        int have = 0;
-        while(sp < len1)
-        {
-             char rch = s.charAt(sp);
-             window.merge(rch,1,Integer::sum);
-             if(tmap.containsKey(rch) && tmap.get(rch) >= window.get(rch))
-               have++;
 
-             while(have == len2)
-             {
-                if(sp-fp+1 < min)
-                {
-                    min = sp-fp+1;
-                    start = fp;
-                    end = sp;
+        while (right < s.length()) {
+            char r = s.charAt(right);
+
+            // If this char is needed, decrease required
+            if (freq[r] > 0) {
+                required--;
+            }
+            freq[r]--;
+            right++;
+
+            // Valid window found
+            while (required == 0) {
+                if (right - left < minLen) {
+                    minLen = right - left;
+                    start = left;
                 }
-                
-                char lch = s.charAt(fp);
-                
-                window.merge(lch,-1,Integer::sum);
-                
-                if(tmap.containsKey(lch) && tmap.get(lch) > window.get(lch))
-                {
-                    have--;
+
+                char l = s.charAt(left);
+                freq[l]++;
+
+                // If char becomes needed again
+                if (freq[l] > 0) {
+                    required++;
                 }
-                fp++;
-             } 
-             sp++;
+                left++;
+            }
         }
 
-        if(min > len1)
-         return "";
-        
-        return s.substring(start,start+min);
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
     }
 }
