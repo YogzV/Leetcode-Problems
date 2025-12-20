@@ -22,12 +22,12 @@ class Solution {
                 required--;
             }
             freq[r]--;
-            right++;
+            
 
             // Valid window found
             while (required == 0) {
-                if (right - left < minLen) {
-                    minLen = right - left;
+                if (right - left +1 < minLen) {
+                    minLen = right - left +1;
                     start = left;
                 }
 
@@ -40,6 +40,7 @@ class Solution {
                 }
                 left++;
             }
+            right++;
         }
 
         return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
