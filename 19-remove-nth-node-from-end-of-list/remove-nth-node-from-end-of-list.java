@@ -28,15 +28,10 @@ class Solution {
         int ind = size - n;
         if(ind == 0)
         return head.next;
-        while(temp!=null){
+        while(true){
             ind--;
             if(ind == 0){
-                if(temp.next.next == null)
-                {
-                    temp.next = null;
-                }else{
-                    temp.next = temp.next.next;
-                }
+                temp.next = temp.next.next;
                 break;
             }
             temp = temp.next;
