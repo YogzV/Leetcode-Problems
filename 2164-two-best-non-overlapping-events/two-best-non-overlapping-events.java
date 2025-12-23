@@ -1,9 +1,6 @@
 class Solution {
     public int maxTwoEvents(int[][] events) {
-        Arrays.sort(events,(a,b) -> {
-            if(a[0] > b[0]) return 1;
-            return -1;
-        });
+        Arrays.sort(events,Comparator.comparingInt(a -> a[0]));
         int ans = 0;
         int max_prev = 0;
         PriorityQueue<int[]> pqueue = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
