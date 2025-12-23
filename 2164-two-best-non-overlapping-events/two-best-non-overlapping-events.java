@@ -6,20 +6,18 @@ class Solution {
         });
         int ans = 0;
         int max_prev = 0;
-        PriorityQueue<int[]> pqueue = new PriorityQueue<>((a,b)->{
-            if(a[0] > b[0]) return 1;
-            return -1;
-        });
+        PriorityQueue<int[]> pqueue = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
        for(int i=0;i<events.length;i++)
        {
-          while(!pqueue.isEmpty() && pqueue.peek()[0] < events[i][0]){
-            
+          int start = events[i][0];
+          int end = events[i][1];
+          int val = events[i][2];
+          while(!pqueue.isEmpty() && pqueue.peek()[0] < start){ 
             max_prev = Math.max(max_prev,pqueue.poll()[1]);
           }
-          
-          
-          pqueue.offer(new int[]{events[i][1],events[i][2]});
-          ans = Math.max(ans,max_prev+events[i][2]);
+        
+          pqueue.offer(new int[]{end,val});
+          ans = Math.max(ans,max_prev+val);
        }
 
         return ans;
