@@ -12,10 +12,9 @@ class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         if(lists.length == 0) return null;
         ListNode head = new ListNode();
-      
-        for(int i=0;i<lists.length;i++)
+        int size = lists.length;
+        for(int i=0;i<size;i++)
         {
-            
             ListNode temp2 = new ListNode();
             ListNode res = temp2;
             ListNode ans = head.next;
@@ -32,16 +31,13 @@ class Solution {
                 }
                 temp2 = temp2.next;
             }
-            while(temp!=null){
+            if(temp!=null){
                 temp2.next = temp;
-                temp2 = temp2.next;
-                temp = temp.next;
+                
             }
-            while(ans!=null)
+            if(ans!=null)
             {
                 temp2.next = ans;
-                temp2 = temp2.next;
-                ans = ans.next;
             }
 
             head = res;
