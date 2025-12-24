@@ -7,12 +7,12 @@ class Solution {
             total += num;
         }
         Arrays.sort(capacity);
-        int have = 0;
+        
         for(int i = capacity.length-1;i>=0;i--)
         {
-             have += capacity[i];
+             total -= capacity[i];
              ans++;
-             if(have >= total)
+             if(total <=0)
              {
                 break;
              }
