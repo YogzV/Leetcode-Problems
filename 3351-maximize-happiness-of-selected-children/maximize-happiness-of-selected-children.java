@@ -4,7 +4,10 @@ class Solution {
         long ans = 0;
         int ind = happiness.length - 1;
         for(int i=0;i<k;i++){
-            ans += Math.max(0,happiness[ind] - i);
+            int val = happiness[ind] - i;
+            if(val <= 0) 
+              break;
+            ans += val;
             ind--;
         }
         return ans;
