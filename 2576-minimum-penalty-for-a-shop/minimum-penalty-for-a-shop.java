@@ -7,9 +7,8 @@ class Solution {
         int min = Integer.MAX_VALUE;
         int ans = 0;
         
-        for(int i=0;i<size;i++)
-            if(customers.charAt(i) == 'Y')
-                totalY++;
+       for(char ch : customers.toCharArray())
+          totalY = (ch=='Y')? totalY++:totalY;
     
         
         for(int i=0;i<=size;i++)
