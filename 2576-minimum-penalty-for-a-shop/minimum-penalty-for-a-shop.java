@@ -2,19 +2,17 @@ class Solution {
     public int bestClosingTime(String customers) {
         int size = customers.length();
         int totalN = 0;
+        int totalY = 0;
         int[] suffix = new int[size+1];
         int i;
         int ans = 0;
         
-        suffix[size] = 0;
-        suffix[size-1] = 0;
-        for(i=size-2;i>=0;i--)
+        for(i=0;i<size;i++)
         {
-            suffix[i] = suffix[i+1];
-            if(customers.charAt(i+1) == 'Y')
+            if(customers.charAt(i) == 'Y')
             {
-                suffix[i]++;
-            } 
+                totalY++;
+            }
         }
         int min = Integer.MAX_VALUE;
         for(i=0;i<=size;i++)
@@ -26,16 +24,15 @@ class Solution {
                     totalN++;
                 }
             }
-            int extra = 0;
-            if(i<size && customers.charAt(i) == 'Y'){
-             extra =1;
-             }
-             
-          if(totalN + suffix[i] + extra  < min)
+           
+          if(totalN + totalY  < min)
           {
-            min = totalN + suffix[i] + extra;
+            min = totalN + totalY ;
             ans = i;
           }
+          if(i<size && customers.charAt(i) == 'Y'){
+              totalY--;
+             }
         }
         
 
