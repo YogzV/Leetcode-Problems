@@ -18,14 +18,16 @@ class Solution {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         List<List<Integer>> list = new ArrayList<>();
-       
+        List<Integer> arr;
+        int size;
+        TreeNode node;
         while(!queue.isEmpty())
         {
-            List<Integer> arr = new ArrayList<>();
-            int size = queue.size();
+            arr = new ArrayList<>();
+            size = queue.size();
             while(size-- > 0)
             {
-                TreeNode node = queue.poll();
+                node = queue.poll();
                 if(node!=null)
                 {
                     arr.add(node.val);
