@@ -26,28 +26,15 @@ class Solution {
         return isSubtree(root.left,subroot) || isSubtree(root.right,subroot);
     }
 
-    // public boolean helper(TreeNode root,TreeNode subroot){
-    //     if(root == null) return false;
-    //     if(root.val == subroot.val){
-    //         if(same(root,subroot))
-    //         {
-    //             return true;
-    //         }
-    //     }
-
-    //     return helper(root.left,subroot) || helper(root.right,subroot);
-
-    // }
 
     public boolean same(TreeNode p,TreeNode q){
-        if(p == null && q== null)
-         return true;
-        else if(p==null && q!=null)
-         return false;
-        else if(p!=null && q==null)
-         return false;
-        else if(p.val != q.val)
-         return false;
+        if(p==null){
+            return (q==null)? true : false;
+        }
+        
+        if(p!=null && q==null || p.val != q.val)
+          return false;
+        
 
         return same(p.left,q.left) && same(p.right,q.right);
     }
