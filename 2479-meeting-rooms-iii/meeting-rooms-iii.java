@@ -1,4 +1,16 @@
+class Pair{
+    long end;
+    int roomNo;
+    Pair(long end,int roomNo)
+    {
+        this.end = end;
+        this.roomNo = roomNo;
+    }
+}
+
 class Solution {
+
+
     public int mostBooked(int n, int[][] meetings) {
 
         int ans = 0;
@@ -19,11 +31,10 @@ class Solution {
         });
 
         Arrays.sort(meetings,Comparator.comparingInt(a -> a[0]));
-        pqueue.offer(new long[]{(long)meetings[0][1],0});
-        rooms[0]++;
-        avail[0] = 1;
         
-        for(i=1;i<size;i++)
+        
+        
+        for(i=0;i<size;i++)
         {
             start = (long)meetings[i][0];
             end = (long)meetings[i][1];
