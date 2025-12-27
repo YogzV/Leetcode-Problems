@@ -21,10 +21,10 @@ class Solution {
         int max = Integer.MIN_VALUE;
         long start,end;
         int room = -1;
-        long[] pt;
+       
 
-        Queue<long[]> pqueue = new PriorityQueue<>((a,b) -> {
-            if(a[0] > b[0] || (a[0] == b[0] && a[1] > b[1]))
+        Queue<Pair> pqueue = new PriorityQueue<>((a,b) -> {
+            if(a.end > b.end || (a.end == b.end && a.roomNo > b.roomNo))
              return 1;
         
             return -1;
@@ -36,24 +36,24 @@ class Solution {
         
         for(i=0;i<size;i++)
         {
-            start = (long)meetings[i][0];
-            end = (long)meetings[i][1];
+            start = meetings[i][0];
+            end = meetings[i][1];
             
-            while(!pqueue.isEmpty() && pqueue.peek()[0] <= start){
-                pt = pqueue.poll();
-                avail[(int)pt[1]] = 0;
+            while(!pqueue.isEmpty() && pqueue.peek().end <= start){
+                avail[pqueue.poll().roomNo] = 0;
             }
+            
             room = roomsAvailable(avail);
             if(room != -1)
             {
-               pqueue.offer(new long[]{end,room});
+               pqueue.offer(new Pair(end,room));
                rooms[room]++;
                avail[room] = 1;
             }else{
-                 pt = pqueue.poll();
-                 end += pt[0] - start;
-                pqueue.offer(new long[]{end,pt[1]});
-                rooms[(int)pt[1]]++;
+                 Pair pt = pqueue.poll();
+                 end += pt.end - start;
+                pqueue.offer(new Pair(end,pt.roomNo));
+                rooms[pt.roomNo]++;
             }
             
 
