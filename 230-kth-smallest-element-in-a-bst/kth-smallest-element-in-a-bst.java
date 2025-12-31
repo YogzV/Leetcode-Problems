@@ -14,22 +14,31 @@
  * }
  */
 class Solution {
+    int cnt = 0;
+    TreeNode node;
     public int kthSmallest(TreeNode root, int k) {
-        Queue<TreeNode> queue = new LinkedList<>();
-        Queue<Integer> pqueue = new PriorityQueue<>();
-        queue.offer(root);
-        while(!queue.isEmpty()){
-             TreeNode node = queue.poll();
-             if(node!=null){
-                pqueue.offer(node.val);
-                queue.offer(node.left);
-                queue.offer(node.right);
-             }
-        }
+        inOrder(root,k);
+        return node.val;
+    }
 
-        while(k-- > 1){
-            pqueue.poll();
+    public void inOrder(TreeNode root,int k)
+    {
+        if(root ==null)
+          return;
+
+        if(root.left!=null)
+         inOrder(root.left,k);
+          
+          this.cnt++;
+        
+        if(this.cnt == k){
+         this.node = root;
+         return;
         }
-        return pqueue.poll();
+        
+        if(root.right!=null)
+         inOrder(root.right,k);
+
+        
     }
 }
