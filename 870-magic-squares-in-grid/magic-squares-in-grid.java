@@ -8,7 +8,7 @@ class Solution {
         {
             for(j=0;j<=col-3;j++)
             {
-                System.out.println(sameColumnSum(grid,i,j));
+                
               if(sameDiagonalSum(grid,i,j) && sameRowSum(grid,i,j) && sameColumnSum(grid,i,j)){
                 ans++;
               }
@@ -30,6 +30,7 @@ class Solution {
                 
                 set.add(grid[j][i]);
                 total += grid[j][i];
+                
             }
             if(i == col){
                 sum = total;
