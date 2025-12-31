@@ -9,7 +9,7 @@ class Solution {
             for(j=0;j<=col-3;j++)
             {
                 
-              if(sameDiagonalSum(grid,i,j) && sameRowSum(grid,i,j) && sameColumnSum(grid,i,j)){
+              if(sameColumnSum(grid,i,j) && sameDiagonalSum(grid,i,j) && sameRowSum(grid,i,j)){
                 ans++;
               }
             }
@@ -48,10 +48,7 @@ class Solution {
         for(i=row;i<row+3;i++){
             int total = 0;
             for(j=col;j<col+3;j++)
-            {
-                if(grid[i][j]>9)
-                 return false;
-                
+            { 
                 total += grid[i][j];
             }
             if(i == row){
@@ -64,13 +61,10 @@ class Solution {
     }
 
     public boolean sameDiagonalSum(int[][] grid,int row,int col){
-        int i,j;
+        int i,j,k;
         int sum = 0;
-        for(i=row,j=col;i<row+3;i++,j++){
-            sum += grid[i][j];
-        }
-        for(i=row,j=col+2;i<row+3;i++,j--){
-            sum -= grid[i][j];
+        for(i=row,j=col,k=col+2;i<row+3;i++,j++,k--){
+            sum += grid[i][j] - grid[i][k];
         }
         if(sum != 0)
          return false;
