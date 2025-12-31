@@ -1,47 +1,79 @@
 class Solution {
-    private boolean isMagicSquare(int[][] grid, int i, int j) {
-        // Check for distinct numbers from 1 to 9
-        boolean[] seen = new boolean[10];
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
-                int num = grid[i + x][j + y];
-                if (num < 1 || num > 9 || seen[num]) return false;
-                seen[num] = true;
+    public int numMagicSquaresInside(int[][] grid) {
+        int i,j;
+        int row = grid.length;
+        int col = grid[0].length;
+        int ans = 0;
+        for(i=0;i<=row-3;i++)
+        {
+            for(j=0;j<=col-3;j++)
+            {
+                System.out.println(sameColumnSum(grid,i,j));
+              if(sameDiagonalSum(grid,i,j) && sameRowSum(grid,i,j) && sameColumnSum(grid,i,j)){
+                ans++;
+              }
             }
         }
+        return ans;
+    }
 
-        int sum = grid[i][j] + grid[i][j+1] + grid[i][j+2];  // First row sum
-        
-        // Check rows
-        for (int x = 0; x < 3; x++) {
-            if (sum != grid[i + x][j] + grid[i + x][j + 1] + grid[i + x][j + 2]) return false;
+    public boolean sameColumnSum(int[][] grid,int row,int col){
+        Set<Integer> set = new HashSet<>();
+        int i,j;
+        int sum = 0;
+        for(i=col;i<col+3;i++){
+            int total = 0;
+            for(j=row;j<row+3;j++)
+            {
+                if(set.contains(grid[j][i]) || grid[j][i]>9 || grid[j][i]==0)
+                  return false;
+                
+                set.add(grid[j][i]);
+                total += grid[j][i];
+            }
+            if(i == col){
+                sum = total;
+            }else if(sum != total){
+                return false;
+            }
         }
-
-        // Check columns
-        for (int y = 0; y < 3; y++) {
-            if (sum != grid[i][j + y] + grid[i + 1][j + y] + grid[i + 2][j + y]) return false;
-        }
-
-        // Check diagonals
-        if (sum != grid[i][j] + grid[i+1][j+1] + grid[i+2][j+2]) return false;
-        if (sum != grid[i+2][j] + grid[i+1][j+1] + grid[i][j+2]) return false;
-
         return true;
     }
-    
-    public int numMagicSquaresInside(int[][] grid) {
-        int count = 0;
-        int rows = grid.length;
-        int cols = grid[0].length;
 
-        for (int i = 0; i <= rows - 3; i++) {
-            for (int j = 0; j <= cols - 3; j++) {
-                if (isMagicSquare(grid, i, j)) {
-                    count++;
-                }
+    public boolean sameRowSum(int[][] grid,int row,int col){
+        
+        int i,j;
+         int sum = 0;
+        for(i=row;i<row+3;i++){
+            int total = 0;
+            for(j=col;j<col+3;j++)
+            {
+                if(grid[i][j]>9)
+                 return false;
+                
+                total += grid[i][j];
+            }
+            if(i == row){
+                sum = total;
+            }else if(sum != total){
+                return false;
             }
         }
+        return true;
+    }
 
-        return count;
+    public boolean sameDiagonalSum(int[][] grid,int row,int col){
+        int i,j;
+        int sum = 0;
+        for(i=row,j=col;i<row+3;i++,j++){
+            sum += grid[i][j];
+        }
+        for(i=row,j=col+2;i<row+3;i++,j--){
+            sum -= grid[i][j];
+        }
+        if(sum != 0)
+         return false;
+
+        return true;
     }
 }
