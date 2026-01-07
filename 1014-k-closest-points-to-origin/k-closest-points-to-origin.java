@@ -1,8 +1,8 @@
 class Pair implements Comparable<Pair>{
-    int[] pt;
+    int ind;
     int dist;
-    Pair(int[] pt ,int dist){
-        this.pt = pt;
+    Pair(int ind ,int dist){
+        this.ind = ind;
         this.dist = dist;
     }
 
@@ -17,17 +17,18 @@ class Solution {
     public int[][] kClosest(int[][] points, int k) {
         Queue<Pair> pqueue = new PriorityQueue<>();
         int[][] ans = new int[k][2];
-
+ 
+        int ind = 0;
         for(int[] pt : points){
             
-            pqueue.offer(new Pair(pt,pt[0]*pt[0] + pt[1]*pt[1]));
+            pqueue.offer(new Pair(ind++,pt[0]*pt[0] + pt[1]*pt[1]));
             if(pqueue.size() > k){
                 pqueue.poll();
             } 
         }
         
         while(k-- > 0){
-          ans[k] = pqueue.poll().pt;
+          ans[k] = points[pqueue.poll().ind];
         }
 
         return ans;
