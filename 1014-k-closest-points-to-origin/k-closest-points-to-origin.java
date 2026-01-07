@@ -1,14 +1,14 @@
 class Pair implements Comparable<Pair>{
     int[] pt;
-    double dist;
-    Pair(int[] pt ,double dist){
+    int dist;
+    Pair(int[] pt ,int dist){
         this.pt = pt;
         this.dist = dist;
     }
 
     @Override
     public int compareTo(Pair other){
-        return Double.compare(other.dist,this.dist);
+        return Integer.compare(other.dist,this.dist);
     }
 }
 
@@ -19,8 +19,8 @@ class Solution {
         int[][] ans = new int[k][2];
 
         for(int[] pt : points){
-            double dist = calculateDistance(pt[0],pt[1]);
-            pqueue.offer(new Pair(pt,dist));
+            
+            pqueue.offer(new Pair(pt,pt[0]*pt[0] + pt[1]*pt[1]));
             if(pqueue.size() > k){
                 pqueue.poll();
             } 
@@ -33,8 +33,5 @@ class Solution {
         return ans;
     }
 
-    public double calculateDistance(int x1,int y1){
-        int val = x1 * x1 + y1 * y1;
-        return Math.sqrt(val);
-    }
+    
 }
