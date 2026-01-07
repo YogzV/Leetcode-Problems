@@ -27,9 +27,7 @@ class Solution {
         }
         
         while(k-- > 0){
-          int[] pt = pqueue.poll().pt;
-          ans[k][0] = pt[0];
-          ans[k][1] = pt[1];
+          ans[k] = pqueue.poll().pt;
         }
 
         return ans;
