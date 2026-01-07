@@ -4,10 +4,10 @@ class Solution {
         for(int num : stones){
             pqueue.offer(num);
         }
-
+        int x,y;
         while(pqueue.size() > 1){
-            int x = pqueue.poll();
-            int y = pqueue.poll();
+             x = pqueue.poll();
+             y = pqueue.poll();
            
             if(x!=y){
                 pqueue.offer(Math.abs(x-y));
