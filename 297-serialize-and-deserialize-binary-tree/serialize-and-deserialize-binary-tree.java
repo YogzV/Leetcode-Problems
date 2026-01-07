@@ -42,7 +42,7 @@ public class Codec {
             if(nodes[1].equals("null"))
               return null;
             
-            return new TreeNode(Integer.parseInt(nodes[1]));
+           
         }
 
         Queue<TreeNode> queue = new LinkedList<>();
