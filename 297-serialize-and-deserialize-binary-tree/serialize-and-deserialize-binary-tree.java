@@ -24,7 +24,7 @@ public class Codec {
                 queue.offer(node.left);
                 queue.offer(node.right);
             }else{
-                str.append("null");
+                str.append("n");
             }
         }
         return str.toString();
@@ -38,7 +38,7 @@ public class Codec {
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         String[] nodes = data.split("#");
-        if(nodes[1].equals("null")){
+        if(nodes[1].equals("n")){
               return null;
         }
 
@@ -51,7 +51,7 @@ public class Codec {
 
             TreeNode temp = queue.poll();
            
-            if(nodes[sp].equals("null")){
+            if(nodes[sp].equals("n")){
                 
                temp.left = null;
             }else{
@@ -60,7 +60,7 @@ public class Codec {
             }
             sp++;
 
-            if(nodes[sp].equals("null")){
+            if(nodes[sp].equals("n")){
               temp.right = null;
             }else{
                temp.right = new TreeNode(Integer.parseInt(nodes[sp]));
