@@ -1,34 +1,21 @@
-class Pair implements Comparable<Pair>{
-    int ind;
-    int dist;
-    Pair(int ind ,int dist){
-        this.ind = ind;
-        this.dist = dist;
-    }
-
-    @Override
-    public int compareTo(Pair other){
-        return Integer.compare(other.dist,this.dist);
-    }
-}
 
 class Solution {
 
     public int[][] kClosest(int[][] points, int k) {
-        Queue<Pair> pqueue = new PriorityQueue<>();
+        Queue<int[]> pqueue = new PriorityQueue<>((a,b) -> Integer.compare(b[0]*b[0] + b[1]*b[1],a[0]*a[0] + a[1]*a[1]));
         int[][] ans = new int[k][2];
  
         int ind = 0;
         for(int[] pt : points){
             
-            pqueue.offer(new Pair(ind++,pt[0]*pt[0] + pt[1]*pt[1]));
+            pqueue.offer(new int[]{pt[0],pt[1]});
             if(pqueue.size() > k){
                 pqueue.poll();
             } 
         }
         
         while(k-- > 0){
-          ans[k] = points[pqueue.poll().ind];
+          ans[k] = pqueue.poll();
         }
 
         return ans;
