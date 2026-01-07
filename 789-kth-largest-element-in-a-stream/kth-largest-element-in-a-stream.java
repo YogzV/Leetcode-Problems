@@ -15,17 +15,10 @@ class KthLargest {
     
     public int add(int val) {
        
-       if(pqueue.size() < k)
-       {
-        pqueue.offer(val);
-        return pqueue.peek();
+       pqueue.offer(val);
+       if(pqueue.size() > k){
+        pqueue.poll();
        }
-       
-       if(pqueue.peek() < val)
-        {
-          pqueue.offer(val);
-          pqueue.poll(); 
-        }
 
        return pqueue.peek();
     }
