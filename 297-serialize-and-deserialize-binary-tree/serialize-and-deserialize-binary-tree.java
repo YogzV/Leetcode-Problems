@@ -4,77 +4,51 @@
  *     int val;
  *     TreeNode left;
  *     TreeNode right;
- *     TreeNode(int x) { val = x; }
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
  * }
  */
+
 public class Codec {
-
-    public String stringBFS(TreeNode root){
-
-        StringBuilder str = new StringBuilder();
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        while(!queue.isEmpty())
-        {
-            TreeNode node = queue.poll();
-            str.append("#");
-            
-            if(node!= null){
-                str.append(String.valueOf(node.val));
-                queue.offer(node.left);
-                queue.offer(node.right);
-            }else{
-                str.append("n");
-            }
-        }
-        return str.toString();
-    }
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-       return stringBFS(root);
+        List<String> res = new ArrayList<>();
+        dfsSerialize(root, res);
+        return String.join(",", res);
+    }
+
+    private void dfsSerialize(TreeNode node, List<String> res) {
+        if (node == null) {
+            res.add("N");
+            return;
+        }
+        res.add(String.valueOf(node.val));
+        dfsSerialize(node.left, res);
+        dfsSerialize(node.right, res);
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        String[] nodes = data.split("#");
-        if(nodes[1].equals("n")){
-              return null;
+        String[] vals = data.split(",");
+        int[] i = {0};
+        return dfsDeserialize(vals, i);
+    }
+
+    private TreeNode dfsDeserialize(String[] vals, int[] i) {
+        if (vals[i[0]].equals("N")) {
+            i[0]++;
+            return null;
         }
-
-        Queue<TreeNode> queue = new LinkedList<>();
-    
-        int sp = 2;
-        TreeNode root = new TreeNode(Integer.parseInt(nodes[1]));
-        queue.offer(root);
-        while(sp < nodes.length){
-
-            TreeNode temp = queue.poll();
-           
-            if(nodes[sp].equals("n")){
-                
-               temp.left = null;
-            }else{
-               temp.left = new TreeNode(Integer.parseInt(nodes[sp]));
-               queue.offer(temp.left);
-            }
-            sp++;
-
-            if(nodes[sp].equals("n")){
-              temp.right = null;
-            }else{
-               temp.right = new TreeNode(Integer.parseInt(nodes[sp]));
-               queue.offer(temp.right);
-            }
-            sp++;
-           
-        }
-        
-        return root;
+        TreeNode node = new TreeNode(Integer.parseInt(vals[i[0]]));
+        i[0]++;
+        node.left = dfsDeserialize(vals, i);
+        node.right = dfsDeserialize(vals, i);
+        return node;
     }
 }
-
-// Your Codec object will be instantiated and called as such:
-// Codec ser = new Codec();
-// Codec deser = new Codec();
-// TreeNode ans = deser.deserialize(ser.serialize(root));
