@@ -38,11 +38,8 @@ public class Codec {
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         String[] nodes = data.split("#");
-        if(nodes.length == 2){
-            if(nodes[1].equals("null"))
+        if(nodes[1].equals("null")){
               return null;
-            
-           
         }
 
         Queue<TreeNode> queue = new LinkedList<>();
