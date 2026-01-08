@@ -1,33 +1,36 @@
-class Solution {
+public class Solution {
     public int leastInterval(char[] tasks, int n) {
-        int[] freq = new int[26];
-      for(char ch : tasks)
-       freq[ch-'A']++;
-
-      Queue<Integer> pqueue = new PriorityQueue<>(Collections.reverseOrder());
-      for(int cnt : freq){
-        if(cnt > 0){
-           pqueue.offer(cnt);
+        int[] count = new int[26];
+        for (char task : tasks) {
+            count[task - 'A']++;
         }
-      }
-      Queue<int[]> queue = new LinkedList<>();
-      int time = 0;
-      while(!pqueue.isEmpty() || !queue.isEmpty()){
-             time++;
-             if(pqueue.isEmpty()){
-                time = queue.peek()[1];
-             }else{
-                int cnt = pqueue.poll() - 1;
-                if(cnt > 0)
-                  queue.offer(new int[]{cnt,time+n});
-             }
 
-             if(!queue.isEmpty() && queue.peek()[1] == time)
-             {
-                pqueue.offer(queue.poll()[0]);
-             }
-      }
-      return time;
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        for (int cnt : count) {
+            if (cnt > 0) {
+                maxHeap.add(cnt);
+            }
+        }
 
+        int time = 0;
+        Queue<int[]> q = new LinkedList<>();
+        while (!maxHeap.isEmpty() || !q.isEmpty()) {
+            time++;
+
+            if (maxHeap.isEmpty()) {
+                time = q.peek()[1];
+            } else {
+                int cnt = maxHeap.poll() - 1;
+                if (cnt > 0) {
+                    q.add(new int[]{cnt, time + n});
+                }
+            }
+
+            if (!q.isEmpty() && q.peek()[1] == time) {
+                maxHeap.add(q.poll()[0]);
+            }
+        }
+
+        return time;
     }
 }
