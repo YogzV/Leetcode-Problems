@@ -12,6 +12,9 @@ class Twitter {
     
     public void postTweet(int userId, int tweetId) {
         tweetMap.computeIfAbsent(userId,k -> new ArrayList<>()).add(new int[]{time++,tweetId});
+        if(tweetMap.get(userId).size() > 10){
+            tweetMap.get(userId).remove(0);
+        }
     }
     
     public List<Integer> getNewsFeed(int userId) {
