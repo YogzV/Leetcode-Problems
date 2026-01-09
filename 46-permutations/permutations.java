@@ -1,30 +1,28 @@
-class Solution {
-      List<List<Integer>> res;
+public class Solution {
+    List<List<Integer>> res;
     public List<List<Integer>> permute(int[] nums) {
         res = new ArrayList<>();
-        List<Integer> perms = new ArrayList<>();
-        helper(nums,new boolean[nums.length],perms);
+        backtrack(nums, 0);
         return res;
     }
 
-    public void helper(int[] nums,boolean[] pick,List<Integer> perms){
-
-          if(perms.size() == nums.length){
-            res.add(new ArrayList<>(perms));
+    public void backtrack(int[] nums, int idx) {
+        if (idx == nums.length) {
+            List<Integer> perm = new ArrayList<>();
+            for (int num : nums) perm.add(num);
+            res.add(perm);
             return;
-          }
-        for(int i=0;i<nums.length;i++)
-        {
-            if(!pick[i]){
-                perms.add(nums[i]);
-                pick[i] = true;
-                helper(nums,pick,perms);
-                pick[i] = false;
-                perms.remove(perms.size() -1);
-
-            }
         }
+        for (int i = idx; i < nums.length; i++) {
+            swap(nums, idx, i);
+            backtrack(nums, idx + 1);
+            swap(nums, idx, i);
+        }
+    }
 
-        return;
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
