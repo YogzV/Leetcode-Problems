@@ -1,20 +1,30 @@
 class Solution {
+      List<List<Integer>> res;
     public List<List<Integer>> permute(int[] nums) {
-         
-         if(nums.length == 0){
-            return Arrays.asList(new ArrayList<>());
-         }
+        res = new ArrayList<>();
+        List<Integer> perms = new ArrayList<>();
+        helper(nums,new boolean[nums.length],perms);
+        return res;
+    }
 
-        List<List<Integer>> res = new ArrayList<>();
-        List<List<Integer>> perms = permute(Arrays.copyOfRange(nums,1,nums.length));
+    public void helper(int[] nums,boolean[] pick,List<Integer> perms){
 
-        for(List<Integer> perm : perms){
-            for(int i=0;i<=perm.size();i++){
-                List<Integer> copy = new ArrayList<>(perm);
-                copy.add(i,nums[0]);
-                res.add(copy);
+          if(perms.size() == nums.length){
+            res.add(new ArrayList<>(perms));
+            return;
+          }
+        for(int i=0;i<nums.length;i++)
+        {
+            if(!pick[i]){
+                perms.add(nums[i]);
+                pick[i] = true;
+                helper(nums,pick,perms);
+                pick[i] = false;
+                perms.remove(perms.size() -1);
+
             }
         }
-        return res;
+
+        return;
     }
 }
