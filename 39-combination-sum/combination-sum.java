@@ -9,17 +9,16 @@ class Solution {
     public void helper(List<List<Integer>> res,int[] arr,int ind,int target,List<Integer> currList){
 
         if(target == 0){
-            res.add(currList);
+            res.add(new ArrayList(currList));
             return;
         }
         if(target < 0 || ind >= arr.length){
             return;
         }
-        
-       List<Integer> list = new ArrayList<>(currList);
 
-       list.add(arr[ind]);
-       helper(res,arr,ind,target-arr[ind],list);
+       currList.add(arr[ind]);
+       helper(res,arr,ind,target-arr[ind],currList);
+       currList.remove(currList.size()-1);
        helper(res,arr,ind+1,target,currList);
         return;
     }
