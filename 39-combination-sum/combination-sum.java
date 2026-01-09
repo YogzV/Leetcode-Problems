@@ -6,28 +6,21 @@ class Solution {
         return res;
     }
 
-    public int helper(List<List<Integer>> res,int[] arr,int ind,int target,List<Integer> currList){
+    public void helper(List<List<Integer>> res,int[] arr,int ind,int target,List<Integer> currList){
 
         if(target == 0){
             res.add(currList);
-            return -1;
+            return;
         }
-        if(target < 0){
-            return -1;
-        }
-        if(ind >= arr.length ){
-            return 0;
+        if(target < 0 || ind >= arr.length){
+            return;
         }
         
-        List<Integer> list = new ArrayList<>(currList);
-        for(int i=arr[ind];i<=target;i+=arr[ind]){
-            list.add(arr[ind]);
-           if(helper(res,arr,ind+1,target-i,list) == -1) 
-             break;
+       List<Integer> list = new ArrayList<>(currList);
 
-        }
-
-        helper(res,arr,ind+1,target,currList);
-        return 0;
+       list.add(arr[ind]);
+       helper(res,arr,ind,target-arr[ind],list);
+       helper(res,arr,ind+1,target,currList);
+        return;
     }
 }
