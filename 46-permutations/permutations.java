@@ -1,8 +1,8 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
          
-         if(nums.length == 1){
-            return Arrays.asList(new ArrayList<>(Arrays.asList(nums[0])));
+         if(nums.length == 0){
+            return Arrays.asList(new ArrayList<>());
          }
 
         List<List<Integer>> res = new ArrayList<>();
