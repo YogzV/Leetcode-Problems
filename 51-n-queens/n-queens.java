@@ -21,7 +21,6 @@ class Solution {
         
         if(row == n)
          {
-            
             List<String> list = new ArrayList<>();
             for(char[] r : board)
                 list.add(new String(r));
@@ -32,67 +31,38 @@ class Solution {
          }
 
         for(int i=0;i<n;i++){
-           
-            
-            boolean notpres = !findRight(board,row,i) && 
-                              !findLeft(board,row,i) &&
-                              !findUp(board,row,i);
 
-        //    System.out.println(row+" "+i+" "+notpres);
-        //    if(row == 3){
-        //     for(char[] r : board){
-        //         for(char c : r){
-        //             System.out.print(c+" ");
-        //         }
-        //         System.out.println();
-        //     }
-        //    }
-                    
+            boolean notpres = !findQueen(board,row,i);
+                            
            if(notpres){
             
              board[row][i] = 'Q';
-             
-
              backtrack(board,row+1);
-
-             
              board[row][i] = '.';
-             
            }
-            
         }
         return;
     }
 
-    public boolean findUp(char[][] board,int row,int col){
-         while(row >=0){
-            if(board[row][col] == 'Q')
+    public boolean findQueen(char[][] board,int row,int col){
+         int n = board.length;
+         int r = row;
+         int c = col;
+        while(r-- > 0 && c-- > 0){
+            if(board[r][c] == 'Q')
              return true;
-
-            row--;
+        }
+        r = row;
+        c = col;
+        while(row-- >0 && col++ < n-1){
+            if(board[row][col] == 'Q')
+              return true;
+        }
+        while(r-- >0){
+            if(board[r][c] == 'Q')
+             return true; 
          }
-         return false;
-    }
 
-    public boolean findRight(char[][] board,int row,int col){
-         int n = board.length;
-        while(row >=0 && col < n){
-            if(board[row][col] == 'Q')
-             return true;
-            row--;
-            col++;
-        }
-        return false;
-    }
-
-    public boolean findLeft(char[][] board,int row,int col){
-         int n = board.length;
-        while(row >=0 && col >=0){
-            if(board[row][col] == 'Q')
-             return true;
-            row--;
-            col--;
-        }
         return false;
     }
 }
