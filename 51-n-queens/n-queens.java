@@ -1,68 +1,46 @@
-class Solution {
-    List<List<String>> res;
+public class Solution {
+    Set<Integer> col = new HashSet<>();
+    Set<Integer> posDiag = new HashSet<>();
+    Set<Integer> negDiag = new HashSet<>();
+    List<List<String>> res = new ArrayList<>();
+
     public List<List<String>> solveNQueens(int n) {
-        res = new ArrayList<>();
-     
         char[][] board = new char[n][n];
-        
-        for(int i=0;i<n;i++){
-           
-            Arrays.fill(board[i],'.');
+        for (char[] row : board) {
+            Arrays.fill(row, '.');
         }
-        
-        backtrack(board,0);
+
+        backtrack(0, n, board);
         return res;
-        
     }
 
-    public void backtrack(char[][] board,int row){
-
-        int n = board.length;
-        
-        if(row == n)
-         {
-            List<String> list = new ArrayList<>();
-            for(char[] r : board)
-                list.add(new String(r));
-               
-            res.add(list);
+    private void backtrack(int r, int n, char[][] board) {
+        if (r == n) {
+            List<String> copy = new ArrayList<>();
+            for (char[] row : board) {
+                copy.add(new String(row));
+            }
+            res.add(copy);
             return;
-            
-         }
-
-        for(int i=0;i<n;i++){
-
-            boolean notpres = !findQueen(board,row,i);
-                            
-           if(notpres){
-            
-             board[row][i] = 'Q';
-             backtrack(board,row+1);
-             board[row][i] = '.';
-           }
         }
-        return;
-    }
 
-    public boolean findQueen(char[][] board,int row,int col){
-         int n = board.length;
-         int r = row;
-         int c = col;
-        while(r-- > 0 && c-- > 0){
-            if(board[r][c] == 'Q')
-             return true;
-        }
-        r = row;
-        c = col;
-        while(row-- >0 && col++ < n-1){
-            if(board[row][col] == 'Q')
-              return true;
-        }
-        while(r-- >0){
-            if(board[r][c] == 'Q')
-             return true; 
-         }
+        for (int c = 0; c < n; c++) {
+            if (col.contains(c) || posDiag.contains(r + c)
+                || negDiag.contains(r - c)) {
+                continue;
+            }
 
-        return false;
+            col.add(c);
+            posDiag.add(r + c);
+            negDiag.add(r - c);
+            board[r][c] = 'Q';
+
+            backtrack(r + 1, n, board);
+
+            col.remove(c);
+            posDiag.remove(r + c);
+            negDiag.remove(r - c);
+            board[r][c] = '.';
+        }
     }
 }
