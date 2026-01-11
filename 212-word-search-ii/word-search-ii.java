@@ -1,77 +1,64 @@
-class Trie{
-    Map<Character,Trie> hmap;
-    boolean end;
-    int index;
+class TrieNode {
+    Map<Character, TrieNode> children;
+    boolean isWord;
 
-    public Trie(){
-        this.hmap = new HashMap<>();
-        this.end = false;
-        this.index = -1;
+    public TrieNode() {
+        children = new HashMap<>();
+        isWord = false;
     }
 
-    public void addWords(String word,int ind){
-        Trie temp = this;
-        for(char c : word.toCharArray()){
-            if(!temp.hmap.containsKey(c)){
-                temp.hmap.put(c,new Trie());
-            }
-            temp = temp.hmap.get(c);
+    public void addWord(String word) {
+        TrieNode cur = this;
+        for (char c : word.toCharArray()) {
+            cur.children.putIfAbsent(c, new TrieNode());
+            cur = cur.children.get(c);
         }
-
-        temp.end = true;
-        temp.index = ind;
-        return;
+        cur.isWord = true;
     }
 }
 
-class Solution {
+public class Solution {
+    private Set<String> res;
+    private boolean[][] visit;
 
-    Set<String> res;
     public List<String> findWords(char[][] board, String[] words) {
-        int i=0,j;
-        Trie root = new Trie();
-        res= new HashSet<>();
-        for(String word : words){
-            root.addWords(word,i);
-            i++;
+        TrieNode root = new TrieNode();
+        for (String word : words) {
+            root.addWord(word);
         }
-         
-         int m = board.length;
-         int n = board[0].length;
-        for(i=0;i<m;i++){
-            for(j=0;j<n;j++){
-                dfs(words,board,i,j,root);
+
+        int ROWS = board.length, COLS = board[0].length;
+        res = new HashSet<>();
+        visit = new boolean[ROWS][COLS];
+
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                dfs(board, r, c, root, "");
             }
         }
-
         return new ArrayList<>(res);
     }
 
-    public void dfs(String[] words,char[][] board,int row,int col,Trie root){
-
-        
-        if(root.end == true){
-            res.add(words[root.index]);
+    private void dfs(char[][] board, int r, int c, TrieNode node, String word) {
+        int ROWS = board.length, COLS = board[0].length;
+        if (r < 0 || c < 0 || r >= ROWS ||
+            c >= COLS || visit[r][c] ||
+            !node.children.containsKey(board[r][c])) {
+            return;
         }
 
-        Trie temp = root;
+        visit[r][c] = true;
+        node = node.children.get(board[r][c]);
+        word += board[r][c];
+        if (node.isWord) {
+            res.add(word);
+        }
 
-        if(row<0 || row>=board.length || col<0 || col>=board[0].length || !temp.hmap.containsKey(board[row][col]))
-          return;
-          
-         Trie next = temp.hmap.get(board[row][col]);
-         char ch = board[row][col]; 
+        dfs(board, r + 1, c, node, word);
+        dfs(board, r - 1, c, node, word);
+        dfs(board, r, c + 1, node, word);
+        dfs(board, r, c - 1, node, word);
 
-         board[row][col] = '#';
-
-         dfs(words,board,row,col+1,next);
-         dfs(words,board,row,col-1,next);
-         dfs(words,board,row+1,col,next);
-         dfs(words,board,row-1,col,next);
-
-         board[row][col] = ch;
-
-         return;
-         
+        visit[r][c] = false;
     }
 }
