@@ -44,7 +44,7 @@ class WordDictionary {
                 for(Character c : temp.hmap.keySet()){
                     
                     Trie temp2 = temp.hmap.get(c);
-                    if(temp2!=null && helper(word,ind+1,temp2)){
+                    if(helper(word,ind+1,temp2)){
                         return true;
                     } 
                 }
