@@ -30,21 +30,20 @@ class WordDictionary {
     }
     
     public boolean search(String word) {
-        Trie temp = root;
-        return helper(word,0,temp);
+        
+        return helper(word,0,root);
     }
 
-    public boolean helper(String word,int ind,Trie temp){
+    public boolean helper(String word,int ind,Trie root){
         
          int len = word.length();
-
+         Trie temp = root;
+         
          while(ind < len){
             if(word.charAt(ind) == '.'){
                 
                 for(Character c : temp.hmap.keySet()){
-                    
-                    Trie temp2 = temp.hmap.get(c);
-                    if(helper(word,ind+1,temp2)){
+                    if(helper(word,ind+1,temp.hmap.get(c))){
                         return true;
                     } 
                 }
