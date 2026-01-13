@@ -20,8 +20,6 @@ class Solution {
             }
         }
 
-        vis = new boolean[m][n];
-
         for(i=0;i<m;i++){
             for(j=0;j<n;j++){
                 if(pacific[i][j] && dfs(i,j,vis,0,heights,Integer.MAX_VALUE)){
@@ -39,11 +37,10 @@ class Solution {
         int m = heights.length;
         int n = heights[0].length;
 
-        if(row <0 || row>=m || col<0 || col>=n)
+        if(row <0 || row>=m || col<0 || col>=n || heights[row][col] > prev || vis[row][col])
          return false;
 
-        if(heights[row][col] > prev || vis[row][col] == true)
-          return false;
+        
 
         if(row == 0 || col==0){
             if(pacific == 1) 
