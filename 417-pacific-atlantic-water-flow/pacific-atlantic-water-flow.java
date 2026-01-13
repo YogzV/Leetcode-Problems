@@ -1,70 +1,50 @@
 class Solution {
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        int m = heights.length;
+        int n = heights[0].length;
+        int i,j;
 
         List<List<Integer>> ans = new ArrayList<>();
-        
-        int i,j;
-        int m = heights.length;
-        int n = heights[0].length;
 
         boolean[][] pacific = new boolean[m][n];
-        
+        boolean[][] atlantic = new boolean[m][n];
 
-        boolean[][] vis = new boolean[m][n];
+        for(i=0;i<n;i++){
+            
+            dfs(0,i,pacific,heights,0);
+            dfs(m-1,i,atlantic,heights,0);
+        }
 
         for(i=0;i<m;i++){
-            for(j=0;j<n;j++){
-                if(dfs(i,j,vis,1,heights)){
-                    pacific[i][j] = true;
-                }
-            }
+            
+            dfs(i,0,pacific,heights,0);
+            dfs(i,n-1,atlantic,heights,0);
         }
 
         for(i=0;i<m;i++){
             for(j=0;j<n;j++){
-                if(pacific[i][j] && dfs(i,j,vis,0,heights)){
-                     ans.add(new ArrayList<>(Arrays.asList(i,j)));   
-                }
+               if(pacific[i][j] && atlantic[i][j]){
+                ans.add(new ArrayList<>(Arrays.asList(i,j)));
+               }
             }
-        } 
- 
-        
-        return ans;        
+         
+        }  
+
+        return ans;
+
     }
 
-    public boolean dfs(int row,int col,boolean[][] vis,int pacific,int[][] heights){
+    public void dfs(int row,int col,boolean[][] ocean,int[][] heights,int prev){
+        if(row<0 || row>=heights.length || col<0 || col>= heights[0].length || heights[row][col] < prev || ocean[row][col])
+         return;
 
-        int m = heights.length;
-        int n = heights[0].length;
+        ocean[row][col] = true;
 
-    
-        if(row == 0 || col==0){
-            if(pacific == 1) 
-              return true;
-            
-        }
+        dfs(row,col+1,ocean,heights,heights[row][col]);
+        dfs(row,col-1,ocean,heights,heights[row][col]);
+        dfs(row+1,col,ocean,heights,heights[row][col]);
+        dfs(row-1,col,ocean,heights,heights[row][col]); 
 
-        if(row == m-1 || col == n-1){
-            if(pacific == 0)
-              return true;           
-        }
-      
-        int[] dx = {0,1,0,-1};
-        int[] dy = {1,0,-1,0};
-        boolean res = false;
-
-        for(int i=0;i<4;i++){
-            int x = row+dx[i];
-            int y = col+dy[i];
-            if(x <0 || x>=m || y<0 || y>=n || heights[x][y] > heights[row][col] || vis[x][y])
-              continue;
-
-           vis[x][y] = true; 
-           res = res || dfs(x,y,vis,pacific,heights);
-           vis[x][y] = false; 
-        }
-            
-        return res;
-
+        return;
     }
 }
