@@ -14,7 +14,7 @@ class Solution {
 
         for(i=0;i<m;i++){
             for(j=0;j<n;j++){
-                if(dfs(i,j,vis,1,heights,Integer.MAX_VALUE)){
+                if(dfs(i,j,vis,1,heights)){
                     pacific[i][j] = true;
                 }
             }
@@ -22,7 +22,7 @@ class Solution {
 
         for(i=0;i<m;i++){
             for(j=0;j<n;j++){
-                if(pacific[i][j] && dfs(i,j,vis,0,heights,Integer.MAX_VALUE)){
+                if(pacific[i][j] && dfs(i,j,vis,0,heights)){
                      ans.add(new ArrayList<>(Arrays.asList(i,j)));   
                 }
             }
@@ -32,16 +32,12 @@ class Solution {
         return ans;        
     }
 
-    public boolean dfs(int row,int col,boolean[][] vis,int pacific,int[][] heights,int prev){
+    public boolean dfs(int row,int col,boolean[][] vis,int pacific,int[][] heights){
 
         int m = heights.length;
         int n = heights[0].length;
 
-        if(row <0 || row>=m || col<0 || col>=n || heights[row][col] > prev || vis[row][col])
-         return false;
-
-        
-
+    
         if(row == 0 || col==0){
             if(pacific == 1) 
               return true;
@@ -50,18 +46,24 @@ class Solution {
 
         if(row == m-1 || col == n-1){
             if(pacific == 0)
-             return true;           
+              return true;           
         }
-
       
+        int[] dx = {0,1,0,-1};
+        int[] dy = {1,0,-1,0};
+        boolean res = false;
 
-        vis[row][col] = true;
-        boolean res = dfs(row,col+1,vis,pacific,heights,heights[row][col]) ||
-                      dfs(row,col-1,vis,pacific,heights,heights[row][col]) || 
-                      dfs(row+1,col,vis,pacific,heights,heights[row][col]) || 
-                      dfs(row-1,col,vis,pacific,heights,heights[row][col]);
+        for(int i=0;i<4;i++){
+            int x = row+dx[i];
+            int y = col+dy[i];
+            if(x <0 || x>=m || y<0 || y>=n || heights[x][y] > heights[row][col] || vis[x][y])
+              continue;
 
-         vis[row][col] = false;  
+           vis[x][y] = true; 
+           res = res || dfs(x,y,vis,pacific,heights);
+           vis[x][y] = false; 
+        }
+            
         return res;
 
     }
