@@ -1,49 +1,77 @@
 class Solution {
-    
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
+
+        List<List<Integer>> ans = new ArrayList<>();
         
-         if (heights.length == 0 || heights[0].length == 0) {
-            return new ArrayList<>();
+        int i,j;
+        int m = heights.length;
+        int n = heights[0].length;
+
+        boolean[][] pacific = new boolean[m][n];
+        boolean[][] atlantic = new boolean[m][n];
+
+        boolean[][] vis = new boolean[m][n];
+
+        for(i=0;i<m;i++){
+            for(j=0;j<n;j++){
+                if(dfs(i,j,vis,1,heights,Integer.MAX_VALUE)){
+                    pacific[i][j] = true;
+                }
+            }
         }
 
-        int i,j,m = heights.length,n = heights[0].length;
+        vis = new boolean[m][n];
 
-        List<List<Integer>> list = new ArrayList<>();
-
-        boolean[][] pac = new boolean[m][n];
-        boolean[][] atl = new boolean[m][n];   
-    
-       
-        for(i=0;i<m;i++)
-        {    
-            dfs(i,0,heights,pac,heights[i][0]);
-            dfs(i,n-1,heights,atl,heights[i][n-1]);    
-        }
-
-       for(i=0;i<n;i++)
-       {
-            dfs(0,i,heights,pac,heights[0][i]);
-            dfs(m-1,i,heights,atl,heights[m-1][i]);
-       }
-
-       for(i=0;i<m;i++)
-        for(j=0;j<n;j++)
-            if(pac[i][j] && atl[i][j])
-                list.add(Arrays.asList(i,j));
-
-        return list;
+        for(i=0;i<m;i++){
+            for(j=0;j<n;j++){
+                if(dfs(i,j,vis,0,heights,Integer.MAX_VALUE)){
+                    atlantic[i][j] = true;
+                }
+            }
+        } 
+ 
+        for(i=0;i<m;i++){
+            for(j=0;j<n;j++){
+                if(pacific[i][j] && atlantic[i][j]){
+                   ans.add(new ArrayList<>(Arrays.asList(i,j)));                    
+                }
+            }
+        } 
+        return ans;        
     }
 
-    public static void dfs(int i,int j,int[][] heights,boolean[][] vis,int value)
-    {
-        if(i>=heights.length || i<0 || j>=heights[0].length || j<0 || vis[i][j] || heights[i][j] < value ) 
-        return;
+    public boolean dfs(int row,int col,boolean[][] vis,int pacific,int[][] heights,int prev){
 
-        vis[i][j] = true;
+        int m = heights.length;
+        int n = heights[0].length;
 
-        dfs(i+1,j,heights,vis,heights[i][j]);
-        dfs(i,j+1,heights,vis,heights[i][j]);
-        dfs(i-1,j,heights,vis,heights[i][j]);
-        dfs(i,j-1,heights,vis,heights[i][j]);
+        if(row <0 || row>=m || col<0 || col>=n)
+         return false;
+
+        if(heights[row][col] > prev || vis[row][col] == true)
+          return false;
+
+        if(row == 0 || col==0){
+            if(pacific == 1) 
+              return true;
+            
+        }
+
+        if(row == m-1 || col == n-1){
+            if(pacific == 0)
+             return true;           
+        }
+
+      
+
+        vis[row][col] = true;
+        boolean res = dfs(row,col+1,vis,pacific,heights,heights[row][col]) ||
+                      dfs(row,col-1,vis,pacific,heights,heights[row][col]) || 
+                      dfs(row+1,col,vis,pacific,heights,heights[row][col]) || 
+                      dfs(row-1,col,vis,pacific,heights,heights[row][col]);
+
+         vis[row][col] = false;  
+        return res;
+
     }
 }
