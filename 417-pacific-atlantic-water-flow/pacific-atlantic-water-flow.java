@@ -8,7 +8,7 @@ class Solution {
         int n = heights[0].length;
 
         boolean[][] pacific = new boolean[m][n];
-        boolean[][] atlantic = new boolean[m][n];
+        
 
         boolean[][] vis = new boolean[m][n];
 
@@ -24,19 +24,13 @@ class Solution {
 
         for(i=0;i<m;i++){
             for(j=0;j<n;j++){
-                if(dfs(i,j,vis,0,heights,Integer.MAX_VALUE)){
-                    atlantic[i][j] = true;
+                if(pacific[i][j] && dfs(i,j,vis,0,heights,Integer.MAX_VALUE)){
+                     ans.add(new ArrayList<>(Arrays.asList(i,j)));   
                 }
             }
         } 
  
-        for(i=0;i<m;i++){
-            for(j=0;j<n;j++){
-                if(pacific[i][j] && atlantic[i][j]){
-                   ans.add(new ArrayList<>(Arrays.asList(i,j)));                    
-                }
-            }
-        } 
+        
         return ans;        
     }
 
