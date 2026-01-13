@@ -1,45 +1,35 @@
 class Solution {
-
-    HashMap<Integer,List<Integer>> adjList;
-    Set<Integer> set;
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        
-        adjList = new HashMap<>();
-        set = new HashSet<>();
-
+        List<List<Integer>> adjList = new ArrayList<>();
         for(int i=0;i<numCourses;i++){
-            adjList.put(i,new ArrayList<>());
+            adjList.add(new ArrayList<>());
         }
+
+        int[] indegree = new int[numCourses];
 
         for(int[] courses : prerequisites){
-            adjList.get(courses[0]).add(courses[1]);
+            adjList.get(courses[1]).add(courses[0]);
+            indegree[courses[0]]++;
         }
-
+         
+         Queue<Integer> queue = new LinkedList<>();
         for(int i=0;i<numCourses;i++){
-            if(!dfs(i))
-             return false;
+            if(indegree[i] == 0){
+                queue.add(i);
+            }
         }
 
-        return true;
-    }
-
-    
-    public boolean dfs(int course){
- 
-        if(set.contains(course))
-         return false;
-
-        if(adjList.get(course).size() == 0)
-         return true;
-
-        set.add(course);
-        for(Integer c : adjList.get(course)){
-            if(!(dfs(c)))
-             return false;
+        int finish = 0;
+        while(!queue.isEmpty()){
+            int course = queue.poll();
+            finish++;
+            for(int c : adjList.get(course)){
+                indegree[c]--;
+                if(indegree[c] == 0)
+                  queue.add(c);
+            }
         }
-        set.remove(course);
-        adjList.put(course,new ArrayList<>());
-        return true;
-    }
 
+        return finish == numCourses;
+    }
 }
