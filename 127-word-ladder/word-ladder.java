@@ -13,6 +13,11 @@ class Solution {
         Set<String> vis = new HashSet<>();
         int len = beginWord.length();
         int ans = Integer.MAX_VALUE;
+        int i,j;
+        Pair pair;
+        int seq;
+        String str,tempStr;
+        StringBuilder temp;
 
         for(String s : wordList){
             set.add(s);
@@ -26,22 +31,21 @@ class Solution {
         vis.add(beginWord);
 
         while(!queue.isEmpty()){
-            Pair pair = queue.poll();
-            String str = pair.str;
+            
+            pair = queue.poll();
+            str = pair.str;
            
-            int seq = pair.seq;
-            //  System.out.println(str+" "+seq);
+            seq = pair.seq;
+            
 
-            for(int i=0;i<len;i++){
+            for(i=0;i<len;i++){
 
-                StringBuilder temp = new StringBuilder(str);
+                temp = new StringBuilder(str);
                 
-              
-                    
-                    for(int j = 'a';j<='z';j++){
+                    for(j = 'a';j<='z';j++){
 
                         temp.setCharAt(i,(char)j);
-                        String tempStr = temp.toString();
+                        tempStr = temp.toString();
                         if(tempStr.equals(endWord)){
                             ans = Math.min(ans,seq+1);
                         }
@@ -51,9 +55,6 @@ class Solution {
                         }
                         
                     }
-                
-
-                
             }
         }
 
