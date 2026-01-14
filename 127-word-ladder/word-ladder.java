@@ -4,7 +4,7 @@ class Solution {
         Set<String> set = new HashSet<>(wordList);
         if (!set.contains(endWord)) return 0;
 
-        Queue<String> queue = new LinkedList<>();
+        Queue<String> queue = new ArrayDeque<>();
         queue.offer(beginWord);
 
         int level = 1;
@@ -31,8 +31,8 @@ class Solution {
                             return level + 1;
                         }
 
-                        if (set.contains(next)) {
-                            set.remove(next);   // mark visited
+                        if (set.remove(next)) {
+                            
                             queue.offer(next);
                         }
                     }
