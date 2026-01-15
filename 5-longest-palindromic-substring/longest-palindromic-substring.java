@@ -1,40 +1,36 @@
 public class Solution {
-    
-        public String longestPalindrome(String s) {
-      int start = 0;      // starting index of longest palindrome
-        int maxLen = 1;    // length of longest palindrome
-
-        for (int i = 0; i < s.length(); i++) {
-
-            // check odd length palindrome (center at i)
-            int oddLen = stretch(s, i, i);
-
-            // check even length palindrome (center between i and i+1)
-            int evenLen = stretch(s, i, i + 1);
-
-            int bestLen = Math.max(oddLen, evenLen);
-
-            if (bestLen > maxLen) {
-                maxLen = bestLen;
-                start = i - (bestLen - 1) / 2;
+    public int[] manacher(String s) {
+        StringBuilder t = new StringBuilder("#");
+        for (char c : s.toCharArray()) {
+            t.append(c).append("#");
+        }
+        int n = t.length();
+        int[] p = new int[n];
+        int l = 0, r = 0;
+        for (int i = 0; i < n; i++) {
+            p[i] = (i < r) ? Math.min(r - i, p[l + (r - i)]) : 0;
+            while (i + p[i] + 1 < n && i - p[i] - 1 >= 0 &&
+                   t.charAt(i + p[i] + 1) == t.charAt(i - p[i] - 1)) {
+                p[i]++;
+            }
+            if (i + p[i] > r) {
+                l = i - p[i];
+                r = i + p[i];
             }
         }
-
-        return s.substring(start, start + maxLen);
+        return p;
     }
 
-    // this method stretches from the center and returns palindrome length
-    private int stretch(String s, int left, int right) {
-
-        while (left >= 0 && right < s.length()
-                && s.charAt(left) == s.charAt(right)) {
-
-            left--;
-            right++;
+    public String longestPalindrome(String s) {
+        int[] p = manacher(s);
+        int resLen = 0, center_idx = 0;
+        for (int i = 0; i < p.length; i++) {
+            if (p[i] > resLen) {
+                resLen = p[i];
+                center_idx = i;
+            }
         }
-
-        // we went one step extra, so fix the length
-        return right - left - 1;  
+        int resIdx = (center_idx - resLen) / 2;
+        return s.substring(resIdx, resIdx + resLen);
     }
-
 }
