@@ -2,32 +2,24 @@ class Solution {
     public int countSubstrings(String s) {
 
         int ans = 0;
+        
+
+        for(int i=s.length()-1;i>=0;i--)
+          ans += countPalindrome(s,i,i) + countPalindrome(s,i-1,i);
+        
+        
+        return ans;
+    }
+
+    public int countPalindrome(String s,int left,int right){
+        int ans = 0;
         int len = s.length();
 
-        for(int i=0;i<len;i++){
-
-            int left = i;
-            int right = i;
-
-            while(left>=0 && right<len && s.charAt(left) == s.charAt(right)){
+        while(left>=0 && right<len && s.charAt(left) == s.charAt(right)){
                 left--;
                 right++;
                 ans++;
             }
-
-           
-
-            left = i;
-            right = i+1;
-
-            while(left>=0 && right<len && s.charAt(left) == s.charAt(right)){
-                left--;
-                right++;
-                ans++;
-            }
-
-        }
-        
         return ans;
     }
 }
