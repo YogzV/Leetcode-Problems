@@ -1,45 +1,40 @@
-class Solution {
-    public String longestPalindrome(String s) {
-        int start = 0;
-        int maxLen = 0;
-        int len = s.length();
+public class Solution {
+    
+        public String longestPalindrome(String s) {
+      int start = 0;      // starting index of longest palindrome
+        int maxLen = 1;    // length of longest palindrome
 
-        for(int i=0;i<len;i++){
+        for (int i = 0; i < s.length(); i++) {
 
-            int left = i;
-            int right = i;
+            // check odd length palindrome (center at i)
+            int oddLen = stretch(s, i, i);
 
-            while(left>=0 && right<len && s.charAt(left) == s.charAt(right)){
-                left--;
-                right++;
-            }
+            // check even length palindrome (center between i and i+1)
+            int evenLen = stretch(s, i, i + 1);
 
-            left++;
-            right--;
-            if((right-left + 1) > maxLen){
-                maxLen = right-left + 1;
-                start = left;
-            }
+            int bestLen = Math.max(oddLen, evenLen);
 
-            left = i;
-            right = i+1;
-
-            while(left>=0 && right<len && s.charAt(left) == s.charAt(right)){
-                left--;
-                right++;
-            }
-
-            left++;
-            right--;
-            if((right-left + 1) > maxLen){
-                
-                maxLen = right-left + 1;
-                start = left;
-                
+            if (bestLen > maxLen) {
+                maxLen = bestLen;
+                start = i - (bestLen - 1) / 2;
             }
         }
-        
-        return s.substring(start,start+maxLen);
 
+        return s.substring(start, start + maxLen);
     }
+
+    // this method stretches from the center and returns palindrome length
+    private int stretch(String s, int left, int right) {
+
+        while (left >= 0 && right < s.length()
+                && s.charAt(left) == s.charAt(right)) {
+
+            left--;
+            right++;
+        }
+
+        // we went one step extra, so fix the length
+        return right - left - 1;  
+    }
+
 }
