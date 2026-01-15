@@ -38,7 +38,7 @@ class Solution {
                 
             }
         }
-        System.out.println();
+        
         return s.substring(start,start+maxLen);
 
     }
