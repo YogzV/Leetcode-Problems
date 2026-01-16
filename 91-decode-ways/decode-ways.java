@@ -1,26 +1,24 @@
 class Solution {
-    HashMap<Integer,Integer> dp;
+   
     public int numDecodings(String s) {
-        dp = new HashMap<>();
-        dp.put(s.length(),1);
-        return recur(s,0);
         
-    }
 
-    public int recur(String s,int ind){
-        if(dp.containsKey(ind))
-         return dp.get(ind);
-
-        if(s.charAt(ind) == '0')
-         return 0;
-
-        int ans = recur(s,ind+1);
-
-        if(ind < s.length()-1 && (s.charAt(ind) == '1' || s.charAt(ind) == '2' && s.charAt(ind+1) < '7'))   {
-            ans += recur(s,ind+2);
+        int n = s.length();
+        int[] dp = new int[n+1];
+        dp[n] = 1;
+        
+        for(int i = n-1 ;i>=0;i--){
+            if(s.charAt(i) == '0')
+             dp[i] = 0;
+            else{
+                dp[i] = dp[i+1];
+                if(i < n-1 && (s.charAt(i) == '1' || s.charAt(i) == '2' && s.charAt(i+1) < '7'))
+                {
+                    dp[i] += dp[i+2];
+                }
+            } 
         }
-
-        dp.put(ind,ans);
-        return ans;
+        return dp[0];
     }
+
 }
