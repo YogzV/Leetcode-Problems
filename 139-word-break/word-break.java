@@ -1,23 +1,25 @@
 class Solution {
-    Map<Integer,Boolean> hmap = new HashMap<>();
+    
     public boolean wordBreak(String s, List<String> wordDict) {
-       hmap.put(s.length(),true);
-        return recur(s,wordDict,0);
-    }
+       
+ 
+        int len = s.length();
+        boolean[] dp = new boolean[len+1];
+        dp[len] = true;
 
-    public boolean recur(String s,List<String> wordDict,int ind){
-        if(hmap.containsKey(ind))
-         return hmap.get(ind);
-
-        for(String str : wordDict){
-            if(ind + str.length() <= s.length() && s.substring(ind,ind+str.length()).equals(str)){
-                if(recur(s,wordDict,ind + str.length())){
-                  hmap.put(ind,true);
-                  return true;
+        for(int i = len-1;i>=0;i--){
+            for(String str : wordDict){
+                if(i + str.length() <= len && s.substring(i,i+str.length()).equals(str)){
+                    dp[i] = dp[i + str.length()];
                 }
+                if(dp[i])
+                  break;
             }
+            
         }
-         hmap.put(ind,false);
-        return false;
+
+        return dp[0];
     }
+
+    
 }
