@@ -22,27 +22,34 @@ class Solution {
         int j = 1;
         ans.add(list.get(0));
         int i = 0;
+        int cnt = 0;
         while(j < size){
-            int[] pt1 = ans.get(i);
+            int[] pt1 = list.get(i);
+            if(pt1[0] == -1){
+                j++;
+                continue;
+            }
+           
             int[] pt2 = list.get(j);
+           
             if(pt1[1] >= pt2[0]){
-                
-                ans.remove(i);
-                ans.add(new int[]{Math.min(pt1[0],pt2[0]) , Math.max(pt1[1],pt2[1])});
-                
+                pt1[0] = Math.min(pt1[0],pt2[0]);
+                pt1[1] = Math.max(pt1[1],pt2[1]); 
+                pt2[0] = -1;
+                cnt++;
+                  
             }else{
-                ans.add(pt2);
                 i++;
             }
             j++;
         }
+        int[][] res = new int[size-cnt][2];
+        int ind= 0;
 
-        int s = ans.size();
-        int[][] res = new int[s][2];
-        int ind = 0;
-        for(int[] row : ans){
-            res[ind][0] = row[0];
-            res[ind++][1] = row[1];
+        for(int[] row : list){
+            if(row[0] != -1){
+                res[ind++] = row;
+            }
         }
         return res;
         
