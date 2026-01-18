@@ -1,7 +1,7 @@
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
         List<int[]> list = new ArrayList<>();
-        List<int[]> ans = new ArrayList<>();
+        
         if(intervals.length == 0)
          return new int[][]{newInterval};
 
@@ -20,20 +20,20 @@ class Solution {
         int size = list.size();
     
         int j = 1;
-        ans.add(list.get(0));
+       
         int i = 0;
         int cnt = 0;
         while(j < size){
             int[] pt1 = list.get(i);
+            int[] pt2 = list.get(j++);
             if(pt1[0] == -1){
-                j++;
                 continue;
             }
            
-            int[] pt2 = list.get(j);
+            
            
             if(pt1[1] >= pt2[0]){
-                pt1[0] = Math.min(pt1[0],pt2[0]);
+                pt1[0] = pt1[0];
                 pt1[1] = Math.max(pt1[1],pt2[1]); 
                 pt2[0] = -1;
                 cnt++;
@@ -41,7 +41,7 @@ class Solution {
             }else{
                 i++;
             }
-            j++;
+            
         }
         int[][] res = new int[size-cnt][2];
         int ind= 0;
