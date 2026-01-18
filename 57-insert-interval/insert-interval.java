@@ -1,57 +1,25 @@
-class Solution {
+public class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        List<int[]> list = new ArrayList<>();
-        
-        if(intervals.length == 0)
-         return new int[][]{newInterval};
+        int n = intervals.length, i = 0;
+        List<int[]> res = new ArrayList<>();
 
-         boolean merged = false;
-        for(int[] in : intervals){
-            if(!merged && in[0] > newInterval[0]){
-              list.add(newInterval);
-              merged = true;
-            }
-            list.add(in);
+        while (i < n && intervals[i][1] < newInterval[0]) {
+            res.add(intervals[i]);
+            i++;
         }
 
-        if(!merged)
-         list.add(newInterval);
-        
-        int size = list.size();
-    
-        int j = 1;
-       
-        int i = 0;
-        int cnt = 0;
-        while(j < size){
-            int[] pt1 = list.get(i);
-            int[] pt2 = list.get(j++);
-            if(pt1[0] == -1){
-                continue;
-            }
-           
-            
-           
-            if(pt1[1] >= pt2[0]){
-                pt1[0] = pt1[0];
-                pt1[1] = Math.max(pt1[1],pt2[1]); 
-                pt2[0] = -1;
-                cnt++;
-                  
-            }else{
-                i++;
-            }
-            
+        while (i < n && newInterval[1] >= intervals[i][0]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
         }
-        int[][] res = new int[size-cnt][2];
-        int ind= 0;
+        res.add(newInterval);
 
-        for(int[] row : list){
-            if(row[0] != -1){
-                res[ind++] = row;
-            }
+        while (i < n) {
+            res.add(intervals[i]);
+            i++;
         }
-        return res;
-        
+
+        return res.toArray(new int[res.size()][]);
     }
 }
