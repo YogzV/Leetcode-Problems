@@ -1,37 +1,37 @@
 class Solution {
 
-    Boolean[][][] memo;
+    Boolean[][] memo;
     public boolean checkValidString(String s) {
-        memo = new Boolean[s.length()][101][101];
-        return recur(s,0,0,0);
+        memo = new Boolean[s.length()][101];
+        return recur(s,0,0);
     }
 
-    public boolean recur(String s,int ind,int op,int cp){
+    public boolean recur(String s,int ind,int op){
         if(ind >= s.length())
         {
-            if(op == cp)
+            if(op == 0)
              return true;
             
             return false;
         }
-        if(memo[ind][op][cp] != null)
-         return memo[ind][op][cp];
+        if(memo[ind][op] != null)
+         return memo[ind][op];
         
 
         boolean res = false;
 
         if(s.charAt(ind) == '('){
-            res = recur(s,ind+1,op+1,cp);
-        }else if(s.charAt(ind) == ')' && op > cp){
-            res = recur(s,ind+1,op,cp+1);
+            res = recur(s,ind+1,op+1);
+        }else if(s.charAt(ind) == ')' && op > 0){
+            res = recur(s,ind+1,op-1);
         }else if(s.charAt(ind) == '*'){
-            if(op > cp){
-                res = recur(s,ind+1,op,cp+1);
+            if(op > 0){
+                res = recur(s,ind+1,op-1);
             }
-            res = res || recur(s,ind+1,op+1,cp) || recur(s,ind+1,op,cp);
+            res = res || recur(s,ind+1,op+1) || recur(s,ind+1,op);
         }
         
-        memo[ind][op][cp] = res;
+        memo[ind][op] = res;
         return res;
     }
 }
