@@ -1,28 +1,22 @@
 class Solution {
-  
-    HashMap<Integer,Integer> memo = new HashMap<>();
     public int jump(int[] nums) {
-        
-        return recur(nums,0);
-        
-    }
+        int left = 0;
+        int right = 0;
+        int ans = 0;
 
-    public int recur(int[] nums,int ind){
-        if(ind >= nums.length - 1){
-         return 0;
-        }
-        if(memo.containsKey(ind))
-         return memo.get(ind);
-        
-        int min = Integer.MAX_VALUE;
-        for(int i=ind+1;i<=ind+nums[ind];i++){
-            int val = recur(nums,i); 
-            if(val != Integer.MAX_VALUE){
-                min = Math.min(min,1+val);
+        while(right < nums.length-1){
+            
+            int far = 0;
+            while(left <= right){
+                far = Math.max(far,left + nums[left]);
+                left++;
             }
+
+            right = far;
+            ans++;
+            
         }
-        
-        memo.put(ind,min);
-        return min;
+
+        return ans;
     }
 }
