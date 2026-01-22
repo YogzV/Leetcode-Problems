@@ -17,11 +17,9 @@ class Solution {
          return memo[ind][buy];
         
         if(buy == 0){
-            ans = recur(prices,ind+1,0);
-            ans = Math.max(ans,recur(prices,ind+1,1) - prices[ind]);
+            ans = Math.max(recur(prices,ind+1,0),recur(prices,ind+1,1) - prices[ind]);
         }else{
-           ans =  Math.max(ans,recur(prices,ind+2,0) + prices[ind]);
-           ans = Math.max(ans,recur(prices,ind+1,1));
+           ans =  Math.max(recur(prices,ind+1,1),recur(prices,ind+2,0) + prices[ind]);
         }
 
         return memo[ind][buy] = ans;
