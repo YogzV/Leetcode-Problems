@@ -1,30 +1,21 @@
 class Solution {
-    int[][] memo;
     public int change(int amount, int[] coins) {
-        memo = new int[coins.length][amount+1];
-        for(int[] row : memo){
-            Arrays.fill(row,-1);
-        }
-        return recur(coins,amount,0);
-    }
-
-    public int recur(int[] coins,int amount,int ind){
-        if(amount == 0)
-         return 1;
-        
-        if(ind >= coins.length)
-         return 0;
-        
-        if(memo[ind][amount] != -1)
-         return memo[ind][amount];
-
-        int ans = recur(coins,amount,ind+1);
-
-        for(int i = coins[ind] ; i <= amount ; i+= coins[ind]){
-            ans += recur(coins,amount - i,ind+1);
+        Arrays.sort(coins);
+        int size = coins.length;
+        int[][] dp = new int[size+1][amount+1];
+        for(int i=0;i<size;i++){
+            dp[i][0] = 1;
         }
 
-        return memo[ind][amount] = ans;
-         
+        for(int i=size - 1;i>=0;i--){
+            for(int a = 1;a <= amount ;a++){
+                if( a>= coins[i]){
+                    dp[i][a] = dp[i+1][a];
+                    dp[i][a] += dp[i][a-coins[i]];
+                }
+            }
+        }
+
+        return dp[0][amount];
     }
 }
