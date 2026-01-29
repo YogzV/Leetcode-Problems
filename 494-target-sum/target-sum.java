@@ -1,27 +1,22 @@
 class Solution {
-    HashMap<String,Integer> memo;
     public int findTargetSumWays(int[] nums, int target) {
-        memo = new HashMap<>();
-        return recur(nums,target,0);
-        
-    }
-
-    public int recur(int[] nums,int target,int ind){
-        if(ind == nums.length){
-            if(target == 0)
-             return 1;
-            
-            return 0;
+        Map<Integer,Integer>[] dp = new HashMap[nums.length+1];
+        for(int i=0;i<=nums.length;i++){
+            dp[i] = new HashMap<>();
         }
-        String key = ind + "," + target;
-        if(memo.containsKey(key))
-         return memo.get(key);
+        dp[0].put(0,1);
 
-        int ans1 = recur(nums,target-nums[ind],ind+1) ;
-        int ans2 = recur(nums,target+nums[ind],ind+1);
+        for(int i=0;i<nums.length;i++){
+            for(Map.Entry<Integer,Integer> entry : dp[i].entrySet()){
+                  int total = entry.getKey();
+                  int way = entry.getValue();
 
-        memo.put(key,ans1 + ans2);
+                  dp[i+1].put(total+nums[i] , (dp[i+1].getOrDefault(total + nums[i],0)+way));
+                  dp[i+1].put(total-nums[i] , (dp[i+1].getOrDefault(total - nums[i],0)+way));
 
-        return ans1 + ans2;
+            }
+        }
+
+        return dp[nums.length].getOrDefault(target,0);
     }
 }
