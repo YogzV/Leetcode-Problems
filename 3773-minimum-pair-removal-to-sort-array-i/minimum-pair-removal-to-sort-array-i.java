@@ -1,13 +1,13 @@
 class Solution {
     public int minimumPairRemoval(int[] nums) {
         int size = nums.length;
-        int i;
+        int i,j,k;
         int ans = 0;
-        for(i=0;i<size-1;i++){
+        while(true){
             boolean fnd = true;
 
-            for(int j=0;j<size;j++){
-                int k = j+1;
+            for(j=0;j<size;j++){
+                k = j+1;
                 while(k<size && nums[k] == Integer.MIN_VALUE){
                     k++;
                 }
@@ -24,21 +24,22 @@ class Solution {
             int ind1 = -1;
             int ind2 = -1;
             int sum = Integer.MAX_VALUE;
-            for(int j=0;j<size-1;j++){
-                int k = j+1;
+            for(j=0;j<size-1;){
+                k = j+1;
                 while(k<size && nums[k]==Integer.MIN_VALUE){
                     
                     k++;
                 }
-                int currSum = nums[j] + ((k<size)?nums[k] : 0);
-                if(k<size && sum > currSum){
-                    
-                    ind1 = j;
-                    ind2 = k;
-                    sum = currSum;
-                    
+                
+                if(k<size){
+                    int currSum = nums[j] + nums[k];
+                    if(sum > currSum){
+                        ind1 = j;
+                        ind2 = k;
+                        sum = currSum;
+                    }
                 }
-                j=k-1;
+                j=k;
             }
 
             nums[ind1] = sum;
