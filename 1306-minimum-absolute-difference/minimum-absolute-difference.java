@@ -9,16 +9,14 @@ class Solution {
 
         for(i=0;i<size-1;i++){
             int val = Math.abs(arr[i+1] - arr[i]);
-            minDiff = Math.min(minDiff,val);
-        }
-
-        for(i=0;i<size-1;i++){
-            int val = Math.abs(arr[i+1] - arr[i]);
-            if(val == minDiff){
+            if(val < minDiff){
+                list.clear();
+                list.add(Arrays.asList(arr[i],arr[i+1]));
+                minDiff = val;
+            }else if(val == minDiff){
                 list.add(Arrays.asList(arr[i],arr[i+1]));
             }
         }
-
         return list;
     }
 }
