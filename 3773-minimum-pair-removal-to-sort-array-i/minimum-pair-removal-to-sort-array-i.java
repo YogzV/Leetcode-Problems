@@ -27,7 +27,7 @@ class Solution {
             for(int j=0;j<size-1;j++){
                 int k = j+1;
                 while(k<size && nums[k]==Integer.MIN_VALUE){
-                    System.out.print(k+" ");
+                    
                     k++;
                 }
                 int currSum = nums[j] + ((k<size)?nums[k] : 0);
@@ -44,10 +44,7 @@ class Solution {
             nums[ind1] = sum;
             nums[ind2] = Integer.MIN_VALUE;
 
-            for(int j=0;j<size;j++){
-                System.out.print(nums[j]+" ");
-            }
-            System.out.println();
+           
             ans++;
         }
 
