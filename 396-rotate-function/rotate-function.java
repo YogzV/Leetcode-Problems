@@ -4,7 +4,7 @@ class Solution {
         int prev = 0;
         int curr = 0;
 
-        int i,j;
+        int i;
         int sum = 0;
        
         for(i=0;i<size;i++){
@@ -14,14 +14,12 @@ class Solution {
         int max = prev;
         
 
-        for(j=1;j<size;j++){
-            int val = (size-1) * nums[size-j];
-            curr = prev + sum - nums[size-j] - val; 
+        for(i=1;i<size;i++){
+            int val = (size) * nums[size-i];
+            curr = prev + sum - val; 
             max = Math.max(curr,max);
             prev = curr;
         }
-
-        
 
         return max;
     }
