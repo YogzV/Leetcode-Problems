@@ -8,6 +8,8 @@ class Solution {
 
         for(i=0;i<size-1;i++){
             for(j=size-1;j>i;j--){
+                if(j-i < ans)
+                  break;
                 if(colors[i] != colors[j]){
                     ans = Math.max(ans,j-i);
                     break;
