@@ -21,8 +21,8 @@ class Solution {
            StringBuilder temp = new StringBuilder();
            boolean fnd = true;
            for(j=0;j<len;j++){
-             char ch = str.charAt(j);
-             char rch = hmap.get(ch);
+             
+             char rch = hmap.get(str.charAt(j));
              if(rch == '-'){
                 fnd = false;
                 break;
