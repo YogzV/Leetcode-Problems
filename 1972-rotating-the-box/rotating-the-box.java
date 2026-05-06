@@ -3,11 +3,11 @@ class Solution {
         int m = boxGrid.length;
         int n = boxGrid[0].length;
         char[][] ans = new char[n][m];
-        int ansj = 0;
-        for(int i=m-1;i>=0;i--){
+        int ansj = 0,i,j,ansi;
+        for(i=m-1;i>=0;i--){
             
-            int ansi = n-1;
-            for(int j=n-1;j>=0;j--){
+            ansi = n-1;
+            for(j=n-1;j>=0;j--){
                 if(boxGrid[i][j] == '#'){
                    
                     ans[ansi][ansj] = '#';
@@ -16,14 +16,13 @@ class Solution {
                     continue;
                 }else{
                   
-                   ansi = j;
-                   ans[ansi][ansj] = '*';
-                   ansi--;
+                   ansi = j-1;
+                   ans[j][ansj] = '*';
                 }
             }
 
-            for(int j = n-1;j>=0;j--){
-                if(ans[j][ansj] != '#' && ans[j][ansj] != '*'){
+            for(j = n-1;j>=0;j--){
+                if(ans[j][ansj] == '\u0000'){
                     ans[j][ansj] = '.';
                 }
             }
