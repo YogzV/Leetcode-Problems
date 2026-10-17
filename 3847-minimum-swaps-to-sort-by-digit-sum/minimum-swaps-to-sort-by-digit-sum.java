@@ -15,10 +15,9 @@ class Solution {
             int temp = nums[i];
             int sum = 0;
 
-            while(temp > 0){
-               sum += (temp %10);
-               temp /= 10;
-            }
+            do{
+                sum += (temp%10);
+            }while((temp/=10) > 0);
 
             SArr[i][0] = sum;
             SArr[i][1] = nums[i]; 
@@ -34,10 +33,9 @@ class Solution {
         int swaps = 0;
         
 
-        for(i =0;i<size;i++){
-            int[] temp = SArr[i];
-
-            if(temp[1] != nums[i]){
+        for(i=0;i<size;i++){
+            if(SArr[i][1] != nums[i]){
+                int[] temp = SArr[i];
                 swaps++;
                 
                 nums[hmap.get(temp[1])] = nums[i];
