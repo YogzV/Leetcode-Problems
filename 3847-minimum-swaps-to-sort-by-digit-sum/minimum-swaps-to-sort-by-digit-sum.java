@@ -1,12 +1,16 @@
 class Solution {
     public int minSwaps(int[] nums) {
         HashMap<Integer,Integer> hmap = new HashMap<>();
-        for(int i=0;i<nums.length;i++){
+
+        int size = nums.length;
+        int i;
+
+        for( i=0;i<size;i++){
             hmap.put(nums[i],i);
         }
 
-        int[][] SArr = new int[nums.length][2];
-        for(int i=0;i<nums.length;i++){
+        int[][] SArr = new int[size][2];
+        for(i=0;i<size;i++){
 
             int temp = nums[i];
             int sum = 0;
@@ -28,24 +32,19 @@ class Solution {
         });
 
         int swaps = 0;
-        int pos = 0;
+        
 
-        for(int i =0;i<nums.length;i++){
+        for(i =0;i<size;i++){
             int[] temp = SArr[i];
 
-            if(hmap.get(temp[1]) != pos){
+            if(hmap.get(temp[1]) != i){
                 swaps++;
                 
-                int pos1 = hmap.get(temp[1]);
-                int num1 = temp[1];
-                int num2 = nums[i];
-                nums[pos1] = num2;
-                nums[pos] = num1;
-                hmap.replace(num1,pos);
-                hmap.replace(num2,pos1);
+                nums[hmap.get(temp[1])] = nums[i];
+                hmap.replace(nums[i],hmap.get(temp[1]));
             }
-            
-            pos++;
+
+        
              
         }
 
