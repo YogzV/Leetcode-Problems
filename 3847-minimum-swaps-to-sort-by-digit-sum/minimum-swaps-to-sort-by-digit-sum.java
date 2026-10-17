@@ -37,7 +37,7 @@ class Solution {
         for(i =0;i<size;i++){
             int[] temp = SArr[i];
 
-            if(hmap.get(temp[1]) != i){
+            if(temp[1] != nums[i]){
                 swaps++;
                 
                 nums[hmap.get(temp[1])] = nums[i];
